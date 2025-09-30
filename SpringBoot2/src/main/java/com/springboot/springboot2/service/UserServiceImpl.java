@@ -1,6 +1,9 @@
 package com.springboot.springboot2.service;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.springboot.springboot2.mapper.UserMapper;
+import com.springboot.springboot2.pojo.PageResult;
 import com.springboot.springboot2.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -37,19 +40,10 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    /**
-     * 封装数据库插入方法，可捕获 DuplicateKeyException
-     */
     private int insertUserWithExceptionHandling(User user) throws DuplicateKeyException {
-        int result = -1;
-        result = userMapper.insertUser(user);
-        return result;
+        return userMapper.insertUser(user);
     }
 
-    /**
-     * 生成唯一 account（MD5 + 时间戳 + 随机数）
-     * 避免唯一索引冲突
-     */
     private String generateUniqueAccount(String username) throws Exception {
         String account;
         int maxRetry = 5; // 最多尝试 5 次
@@ -74,4 +68,20 @@ public class UserServiceImpl implements UserService {
 
         throw new Exception("生成唯一账号失败，请稍后重试");
     }
+
+    /**
+     * 分页查询业主信息
+     */
+    @Override
+    public PageResult<User> pageOfOwner(int current, int size) {
+        if (current < 1) current = 1;
+        if (size < 1) size = 10;
+
+        PageHelper.startPage(current, size);
+        Page<User> page = userMapper.owners(); // 你要保证 UserMapper 里有对应的 `owners()` 方法
+
+        return PageResult.restPage(page);
+    }
+    Page<User> page = userMapper.owners();
+
 }

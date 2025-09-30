@@ -65,5 +65,20 @@
             user_roomid = #{userRoomId}
         WHERE account = #{account}
     </update>
+    <!-- 查询业主用户列表 -->
+    <select id="owners" resultType="com.springboot.springboot2.pojo.User">
+        SELECT id,
+               account,
+               password,
+               idcard,
+               username,
+               gender,
+               age,
+               user_type,
+               user_status,
+               user_roomid AS userRoomId
+        FROM user
+        WHERE user_type = 3
+    </select>
 
 </mapper>

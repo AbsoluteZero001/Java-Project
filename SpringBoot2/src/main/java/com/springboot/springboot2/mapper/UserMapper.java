@@ -4,6 +4,10 @@ import com.springboot.springboot2.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+import com.github.pagehelper.Page;
+import com.springboot.springboot2.pojo.User;
+
+
 
 import java.util.List;
 
@@ -40,4 +44,7 @@ public interface UserMapper {
      * 更新用户信息
      */
     int updateUser(User user);
+
+
+    Page<User> owners();
 }
