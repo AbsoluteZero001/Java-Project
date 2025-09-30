@@ -11,12 +11,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final UserMapper userMapper;
+
+    // 构造函数注入 Mapper（推荐方式）
     @Autowired
-    private UserMapper userMapper;
+    public UserServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
+    }
 
     @Override
     public int insertUser(User user) throws Exception {
@@ -78,10 +84,10 @@ public class UserServiceImpl implements UserService {
         if (size < 1) size = 10;
 
         PageHelper.startPage(current, size);
-        Page<User> page = userMapper.owners(); // 你要保证 UserMapper 里有对应的 `owners()` 方法
-
+        Page<User> page = userMapper.owners(); // 调用 Mapper 方法，保证 userMapper 已注入
         return PageResult.restPage(page);
     }
-    Page<User> page = userMapper.owners();
 
+    // ❌ 删除原来在类末尾直接调用 Mapper 的字段
+    // Page<User> page = userMapper.owners(); // 不要在类中直接调用 Mapper
 }
