@@ -1,13 +1,10 @@
 package com.springboot.springboot2.mapper;
 
+import com.github.pagehelper.Page;
 import com.springboot.springboot2.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import com.github.pagehelper.Page;
-import com.springboot.springboot2.pojo.User;
-
-
 
 import java.util.List;
 
@@ -16,14 +13,19 @@ import java.util.List;
 public interface UserMapper {
 
     /**
-     * 插入用户，自动生成 id
+     * 新增用户
      */
     int insertUser(User user);
 
     /**
-     * 检查账号是否存在
+     * 删除用户（根据ID）
      */
-    int countByAccount(@Param("account") String account);
+    int deleteUserById(@Param("id") Integer id);
+
+    /**
+     * 更新用户
+     */
+    int updateUser(User user);
 
     /**
      * 查询所有用户
@@ -31,20 +33,18 @@ public interface UserMapper {
     List<User> selectAllUsers();
 
     /**
-     * 根据 account 查询用户
+     * 根据账号查询单个用户
      */
     User selectUserByAccount(@Param("account") String account);
 
     /**
-     * 根据 id 删除用户
+     * 检查账号是否存在（返回数量）
      */
-    int deleteUserById(@Param("id") Integer id);
+    int countByAccount(@Param("account") String account);
 
     /**
-     * 更新用户信息
+     * 分页查询业主列表
+     * 注意：必须返回 Page<User>
      */
-    int updateUser(User user);
-
-
     Page<User> owners();
 }

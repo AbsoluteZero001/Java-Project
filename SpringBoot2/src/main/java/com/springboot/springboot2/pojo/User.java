@@ -25,7 +25,7 @@ public class User {
     private Short userType;
 
     @Schema(description = "用户ID（主键）")
-    private Integer userId;  // 对应数据库自增主键
+    private Integer userId;
 
     @Schema(description = "用户性别，0-未知，1-男，2-女")
     private Short gender;
@@ -46,6 +46,13 @@ public class User {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<Room> rooms;
 
+    // ===== 为 MyBatis 单个房间映射添加 setter =====
+    public void setRoom(Room room) {
+        if (room != null) {
+            this.rooms = List.of(room);
+        }
+    }
+
     // ===== 自定义 setPassword（MD5加密）=====
     public void setPassword(String password) {
         if (password != null && password.length() != 32) {
@@ -55,7 +62,6 @@ public class User {
         }
     }
 
-    // ===== 重写 toString =====
     @Override
     public String toString() {
         return "User{" +
