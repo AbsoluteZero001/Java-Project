@@ -8,10 +8,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * 用户控制器
+ */
 @Tag(name = "业主相关 API")
 @RequestMapping("/user")
 @RestController
@@ -20,7 +22,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // 之前的 insertUser 方法...
+    /**
+     * 修改用户状态（例如更换业主）
+     */
+    @GetMapping(value = "/id/{userid}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(
+            summary = "根据用户ID查询用户详细信息",
+            description = "<span style='color:red'>若查询失败，返回 null</span>"
+    )
+    public ResponsePojo<User> queryById(
+            @Parameter(description = "用户ID", required = true)
+            @PathVariable("userid") Integer id) {
+
+        User u = userService.queryById(id);
+
+        if (u != null) {
+            return ResponsePojo.success(u);
+        } else {
+            return ResponsePojo.fail(u, "该 ID 不存在对应用户");
+        }
+    }
 
     /**
      * 分页查询业主信息
@@ -34,7 +55,6 @@ public class UserController {
             @Parameter(description = "每页行数", example = "10")
             @RequestParam(defaultValue = "10") Integer size) {
 
-        // 参数校验
         if (current < 1) current = 1;
         if (size < 1) size = 10;
 

@@ -4,13 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.springboot.mapper.FloorMapper">
 
-    <select id="findAllFloor" resultType="com.springboot.springboot.pojo.Floor">
+    <select id="findAllFloor" resultMap="floorResultMap">
         SELECT
         f.floor_id        AS floorId,
         f.belong_building AS belongBuilding,
         f.floor_number    AS floorNumber,
         f.room_number     AS roomNumber,
-        b.building_name   AS buildingName
+        b.building_id     AS buildingId,
+        b.building_code   AS buildingCode,
+        b.building_name   AS buildingName,
+        b.building_status AS buildingStatus,
+        b.building_floors AS buildingFloors,
+        b.completed_date  AS completedDate,
+        b.design_life     AS designLife,
+        b.ownership       AS ownership
         FROM floor f
         LEFT JOIN building b ON f.belong_building = b.building_id
         <where>
@@ -19,5 +26,22 @@
             </if>
         </where>
     </select>
+
+    <resultMap id="floorResultMap" type="com.springboot.springboot.pojo.Floor">
+        <id property="floorId" column="floorId"/>
+        <result property="belongBuilding" column="belongBuilding"/>
+        <result property="floorNumber" column="floorNumber"/>
+        <result property="roomNumber" column="roomNumber"/>
+        <association property="building" javaType="com.springboot.springboot.pojo.Building">
+            <id property="buildingId" column="buildingId"/>
+            <result property="buildingCode" column="buildingCode"/>
+            <result property="buildingName" column="buildingName"/>
+            <result property="buildingStatus" column="buildingStatus"/>
+            <result property="buildingFloors" column="buildingFloors"/>
+            <result property="completedDate" column="completedDate"/>
+            <result property="designLife" column="designLife"/>
+            <result property="ownership" column="ownership"/>
+        </association>
+    </resultMap>
 
 </mapper>

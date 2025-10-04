@@ -27,4 +27,20 @@ public interface UserService {
      * @return PageResult<User>
      */
     PageResult<User> pageOfOwner(int current, int size);
+
+    /**
+     * 修改用户状态
+     *
+     * @param user 用户对象（含 userId 和 userStatus）
+     * @return 更新结果（0 失败，1 成功）
+     */
+    int changeUserStatus(User user);
+
+    /**
+     * 通过ID查询用户信息
+     *
+     * @param id 用户ID
+     * @return 用户对象
+     */
+    User queryById(Integer id);
 }

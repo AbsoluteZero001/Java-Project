@@ -2,8 +2,7 @@ package com.springboot.springboot2.mapper;
 
 import com.github.pagehelper.Page;
 import com.springboot.springboot2.pojo.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -47,4 +46,17 @@ public interface UserMapper {
      * 注意：必须返回 Page<User>
      */
     Page<User> owners();
+
+    /**
+     * 根据ID查询用户
+     */
+    @Select("""
+        SELECT userid, username, account, idcard, gender, age, user_type, user_status, user_roomid
+        FROM user
+        WHERE userid = #{id}
+    """)
+    User queryById(Integer id);
+
+
+    int changeUserStatus(User user);
 }

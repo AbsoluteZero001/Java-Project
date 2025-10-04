@@ -1,4 +1,4 @@
-package com.springboot.springboot2.service;
+package com.springboot.springboot2.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -9,31 +9,57 @@ import com.springboot.springboot2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * 用户服务实现类
+ */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
 
+    /**
+     * 新增用户
+     */
     @Override
     public int insertUser(User user) throws DuplicateKeyException, Exception {
         return userMapper.insertUser(user);
     }
 
+    /**
+     * 分页查询业主信息
+     */
     @Override
     public PageResult<User> pageOfOwner(int current, int size) {
-        // 参数校验
         if (current < 1) current = 1;
         if (size < 1) size = 10;
 
         // 开启分页
         PageHelper.startPage(current, size);
 
-        // 调用 Mapper 查询
+        // 查询结果
         Page<User> page = userMapper.owners();
 
-        // 封装成 PageResult
+        // 封装分页结果
         return PageResult.restPage(page);
+    }
+
+    /**
+     * 修改用户状态
+     */
+    @Override
+    public int changeUserStatus(User user) {
+        return userMapper.changeUserStatus(user);
+    }
+
+    /**
+     * 通过ID查询用户
+     */
+    @Override
+    public User queryById(Integer id) {
+        return userMapper.queryById(id);
     }
 }
