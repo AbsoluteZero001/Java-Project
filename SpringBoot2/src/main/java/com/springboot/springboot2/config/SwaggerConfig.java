@@ -13,12 +13,12 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("物业管理项目管理员系统")   // 标题
-                        .description("进行基础资料的管理") // 描述
+                        .title("物业管理项目物业系统")   // 标题
+                        .description("进行物业管理") // 描述
                         .version("1.0")                  // 版本
                         .contact(new Contact()
                                 .name("成都工业职业技术学院唐进杰")
-                                .url("http://localhost:8080/")
+                                .url("http://localhost:8081/")
                                 .email("TANGJINJIE2006@outlook.com")));
     }
 }

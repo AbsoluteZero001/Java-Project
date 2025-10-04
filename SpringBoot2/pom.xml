@@ -125,14 +125,14 @@
 
     <!-- ✅ 构建配置 -->
     <build>
-        <finalName>小区物业管理系统-客户端</finalName>
+        <finalName>小区物业管理系统-物业端</finalName>
         <plugins>
             <!-- Spring Boot 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>小区物业管理系统-客户端</finalName>
+                    <finalName>小区物业管理系统-物业端</finalName>
                 </configuration>
             </plugin>
         </plugins>
