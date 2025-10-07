@@ -12,4 +12,7 @@ public interface BuildingMapper {
 
     // 插入楼栋
     int insertBuilding(Building building);
+
+    //添加insertBuildings方法
+    int insertBuildings(List<Building> buildings);
 }

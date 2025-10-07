@@ -86,5 +86,29 @@
         FROM building
         ORDER BY building_id ASC
     </select>
+    <!-- 批量插入楼栋 -->
+    <insert id="insertBuildings" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="buildingId">
+        INSERT INTO building(
+        building_name,
+        building_code,
+        building_status,
+        building_floors,
+        completed_date,
+        design_life,
+        ownership
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.buildingName},
+            #{item.buildingCode},
+            #{item.buildingStatus},
+            #{item.buildingFloors},
+            #{item.completionDate},
+            #{item.designLife},
+            #{item.ownership}
+            )
+        </foreach>
+    </insert>
 
 </mapper>

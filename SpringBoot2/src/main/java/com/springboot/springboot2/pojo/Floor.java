@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Schema(description = "楼层信息，包括每层楼多少间房及楼层序号")
-public class Floor {
+public class Floor implements Cloneable {
 
     @Schema(description = "楼层信息标识")
     private Integer floorId;
@@ -19,7 +19,15 @@ public class Floor {
     @Schema(description = "该楼层房间数量")
     private Short roomNumber;
 
-    //新增字段
     @Schema(description = "该楼层所属楼栋")
-    private Short buildingName;
+    private String buildingName; // 改为 String 类型，方便处理
+
+    @Override
+    public Floor clone() {
+        try {
+            return (Floor) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException("克隆失败", e);
+        }
+    }
 }

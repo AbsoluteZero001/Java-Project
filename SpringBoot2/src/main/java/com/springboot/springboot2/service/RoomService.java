@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface RoomService {
     List<Room> roomsOfFloor(Integer floorId);
+    int insertRooms(List<Room> rooms);
 }
 
