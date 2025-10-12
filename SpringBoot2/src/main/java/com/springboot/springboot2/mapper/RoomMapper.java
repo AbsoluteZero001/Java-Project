@@ -1,14 +1,13 @@
 package com.springboot.springboot2.mapper;
 
+import com.github.pagehelper.Page;
 import com.springboot.springboot2.pojo.Room;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -17,7 +16,6 @@ public interface RoomMapper {
     /**
      * 根据房间ID查询单个房间
      */
-    @Select("SELECT room_id, room_code, room_floor_id, built_up_area, room_status FROM room WHERE room_id = #{id}")
     Room roomById(@Param("id") Integer id);
 
     /**
@@ -32,15 +30,22 @@ public interface RoomMapper {
 
     /**
      * 批量插入房间
-     * 使用 MyBatis 的 foreach 遍历 list
-     * 注意：room_id 使用自增主键，因此可以传 null
+     * 注意：room_id 使用自增主键，因此在 XML 中可以传 null
      */
-    @Insert("<script>" +
-            "INSERT INTO room (room_id, room_floor_id, built_up_area, room_code) VALUES " +
-            "<foreach collection='list' item='item' index='i' separator=','>" +
-            "(NULL, #{item.roomFloorId}, #{item.builtUpArea}, CONCAT(#{item.roomCode}, #{i+1}))" +
-            "</foreach>" +
-            "</script>")
-    @Options(useGeneratedKeys = true, keyProperty = "roomId", keyColumn = "room_id")
     int insertRooms(@Param("list") List<Room> roomList);
+
+    /**
+     * 分页查询房间信息，可带关键字筛选
+     * 参数使用 Map 封装
+     */
+    Page<Room> pageOfRooms(@Param("params") Map<String, Object> params);
+
+/**
+ * 修改房间状态的方法
+ * @param idList 房间ID列表，需要修改状态的房间ID集合
+ * @param status 目标状态，要修改成的状态值
+ * @return 返回值类型为int，可能表示受影响的行数或操作状态码
+ */
+    int changeRoomStatus(@Param("idList") List<Integer> idList, @Param("status") Integer status);
+
 }
