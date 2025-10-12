@@ -86,6 +86,7 @@
         FROM building
         ORDER BY building_id ASC
     </select>
+
     <!-- 批量插入楼栋 -->
     <insert id="insertBuildings" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="buildingId">
         INSERT INTO building(
@@ -110,5 +111,15 @@
             )
         </foreach>
     </insert>
+
+    <!-- 批量修改多个建筑状态 -->
+    <update id="changeBuildingStatus">
+        UPDATE building
+        SET building_status = #{status}
+        WHERE building_id IN
+        <foreach collection="idList" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </update>
 
 </mapper>

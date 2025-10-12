@@ -97,4 +97,9 @@ public class BuildingServiceImpl implements BuildingService {
 
         return buildings;
     }
+
+    @Override
+    public int changeBuildingStatus(List<Integer> idList, Integer status) {
+        return buildingMapper.changeBuildingStatus(idList, status);
+    }
 }

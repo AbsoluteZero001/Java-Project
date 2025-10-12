@@ -8,6 +8,7 @@ import com.springboot.springboot2.service.BuildingService;
 import com.springboot.springboot2.service.FloorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.MediaType;
@@ -133,6 +134,27 @@ public class BuildingController {
 
         } catch (DuplicateKeyException e) {
             return ResponsePojo.fail(null, e.getMessage());
+        }
+    }
+    @Operation(summary = "批量修改多个建筑的状态")
+    @Parameters({
+            @Parameter(name = "idList", description = "需修改状态的楼栋 id 列表", required = true),
+            @Parameter(name = "status", description = "修改后的状态", required = true)
+    })
+    @PutMapping("/updatestatus")
+    public ResponsePojo<Integer> changeBuildingStatus(
+            @RequestParam("idList") List<Integer> idList,
+            @RequestParam("status") Integer status) {
+
+        if (idList != null && !idList.isEmpty()) {
+            try {
+                return ResponsePojo.success(buildingService.changeBuildingStatus(idList, status));
+            } catch (Exception e) {
+                e.printStackTrace();
+                return ResponsePojo.fail(null, "无数据");
+            }
+        } else {
+            return ResponsePojo.fail(null, "参数错误");
         }
     }
 

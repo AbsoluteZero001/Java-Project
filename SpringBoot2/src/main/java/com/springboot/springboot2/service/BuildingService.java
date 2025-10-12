@@ -19,4 +19,7 @@ public interface BuildingService {
 
     // 批量新增楼栋，返回生成的楼栋列表（适配 Controller 调用）
     List<Building> insertBuildings(Building firstBuilding, int buildingSize, Integer[] builtArea);
+
+    // 修改楼栋状态
+    int changeBuildingStatus(List<Integer>idList,Integer status);
 }
