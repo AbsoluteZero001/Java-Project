@@ -90,8 +90,11 @@ public class BuildingController {
                 @RequestParam int buildingsize,
 
                 @Parameter(description = "每层楼房间的建筑面积，按房间序号排列", required = true)
-                @RequestParam List<Double> builtArea
+                @RequestParam List<Double> builtArea,@RequestBody(required = true) Building firstBuilding
     ) {
+        if (firstBuilding == null) {
+           ResponseEntity.badRequest().build();
+        }
         // 你的处理逻辑
         return ResponseEntity.ok().build();
     }
