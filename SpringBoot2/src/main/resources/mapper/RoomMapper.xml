@@ -81,5 +81,16 @@
             #{id}
         </foreach>
     </update>
+    <!-- 根据房间ID查询单个房间 -->
+    <select id="roomById" resultType="com.springboot.springboot2.pojo.Room" parameterType="int">
+        SELECT
+            room_id AS roomId,
+            room_code AS roomCode,
+            room_floor_id AS roomFloorId,
+            built_up_area AS builtUpArea,
+            room_status AS roomStatus
+        FROM room
+        WHERE room_id = #{id}
+    </select>
 
 </mapper>
