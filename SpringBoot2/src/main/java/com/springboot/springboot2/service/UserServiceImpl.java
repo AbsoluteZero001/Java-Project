@@ -1,11 +1,11 @@
-package com.springboot.springboot2.service.impl;
+package com.springboot.springboot2.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.springboot.springboot2.mapper.UserMapper;
 import com.springboot.springboot2.pojo.PageResult;
+import com.springboot.springboot2.pojo.UnpaidOwner;
 import com.springboot.springboot2.pojo.User;
-import com.springboot.springboot2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -61,5 +61,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryById(Integer id) {
         return userMapper.queryById(id);
+    }
+
+    /**
+     * 分页查询未缴费业主列表
+     */
+    @Override
+    public PageResult<UnpaidOwner> pageOfUnpaidOwnerList(Integer current, Integer size, Integer typeId) {
+       PageHelper.startPage(current, size);
+       Page<UnpaidOwner> page = userMapper.unpaidOwnerList(typeId);
+       return PageResult.restPage(page);
     }
 }

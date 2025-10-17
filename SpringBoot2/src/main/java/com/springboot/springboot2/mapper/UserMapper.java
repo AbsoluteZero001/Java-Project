@@ -1,6 +1,7 @@
 package com.springboot.springboot2.mapper;
 
 import com.github.pagehelper.Page;
+import com.springboot.springboot2.pojo.UnpaidOwner;
 import com.springboot.springboot2.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -61,4 +62,9 @@ public interface UserMapper {
 
 
     int changeUserStatus(User user);
+
+    /**
+     * 分页查询单项费用欠费名单
+     */
+    Page<UnpaidOwner> unpaidOwnerList(@Param("typeId") Integer typeId);
 }

@@ -2,6 +2,7 @@ package com.springboot.springboot2.controller;
 
 import com.springboot.springboot2.pojo.PageResult;
 import com.springboot.springboot2.pojo.ResponsePojo;
+import com.springboot.springboot2.pojo.UnpaidOwner;
 import com.springboot.springboot2.pojo.User;
 import com.springboot.springboot2.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -61,4 +62,18 @@ public class UserController {
         PageResult<User> page = userService.pageOfOwner(current, size);
         return ResponsePojo.success(page);
     }
+    /**
+     * 欠费名单查询
+     */
+    @GetMapping("/unpaidOwnerList")
+    @Operation(summary = "单项费用的欠费名单查询")
+    public ResponsePojo<PageResult<UnpaidOwner>> unpaidOwnerList(
+            @RequestParam(defaultValue = "1") Integer current,
+            @RequestParam(defaultValue = "10") Integer size,
+            @RequestParam @Parameter(description = "费用类型ID") Integer typeId) {
+
+        PageResult<UnpaidOwner> pageResult = userService.pageOfUnpaidOwnerList(current, size, typeId);
+        return ResponsePojo.success(pageResult);
+    }
+
 }

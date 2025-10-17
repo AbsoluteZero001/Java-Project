@@ -1,6 +1,7 @@
 package com.springboot.springboot2.service;
 
 import com.springboot.springboot2.pojo.PageResult;
+import com.springboot.springboot2.pojo.UnpaidOwner;
 import com.springboot.springboot2.pojo.User;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -43,4 +44,8 @@ public interface UserService {
      * @return 用户对象
      */
     User queryById(Integer id);
+    /**
+     * 添加pageOfUnpaidOwnerList方法，用于查询未缴费业主列表
+     */
+    PageResult<UnpaidOwner> pageOfUnpaidOwnerList(Integer current, Integer size, Integer typeId);
 }

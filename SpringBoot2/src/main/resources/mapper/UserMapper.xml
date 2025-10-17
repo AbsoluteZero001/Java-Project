@@ -5,29 +5,6 @@
 
 <mapper namespace="com.springboot.springboot2.mapper.UserMapper">
 
-    <!-- 全部列 -->
-    <sql id="fullCols">
-        userid AS userId,
-        username,
-        account,
-        idcard,
-        gender,
-        age,
-        user_type AS userType,
-        user_status AS userStatus,
-        user_roomid AS userRoomId
-    </sql>
-
-    <!-- 简单列 -->
-    <sql id="simpleCols">
-        userid AS userId,
-        username,
-        gender,
-        age,
-        user_status AS userStatus,
-        user_roomid AS userRoomId
-    </sql>
-
     <!-- 基础结果映射 -->
     <resultMap id="baseColumns" type="com.springboot.springboot2.pojo.User">
         <id column="userId" property="userId"/>
@@ -43,13 +20,13 @@
 
     <!-- 业主带房间关联 -->
     <resultMap id="ownRoom" type="com.springboot.springboot2.pojo.User" extends="baseColumns">
-        <association property="room" column="userRoomId" javaType="com.springboot.springboot2.pojo.Room"
+        <association property="rooms" column="userRoomId" javaType="com.springboot.springboot2.pojo.Room"
                      select="com.springboot.springboot2.mapper.RoomMapper.roomById"/>
     </resultMap>
 
     <!-- 分页查询业主列表 -->
     <select id="owners" resultMap="ownRoom">
-        SELECT <include refid="simpleCols"/>
+        SELECT userid AS userId, username, gender, age, user_status AS userStatus, user_roomid AS userRoomId
         FROM user
         WHERE user_type = 3
     </select>
@@ -59,5 +36,82 @@
         SET user_status = #{userStatus}
         WHERE userid = #{userId}
     </update>
+
+    <!-- UnpaidOwner 结果映射 -->
+    <resultMap id="UnpaidOwnerMap" type="com.springboot.springboot2.pojo.UnpaidOwner">
+
+        <!-- 映射 User 对象 -->
+        <association property="user" javaType="com.springboot.springboot2.pojo.User">
+            <id column="userId" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="account" property="account"/>
+            <result column="idcard" property="idcard"/>
+            <result column="gender" property="gender"/>
+            <result column="age" property="age"/>
+            <result column="userType" property="userType"/>
+            <result column="userStatus" property="userStatus"/>
+            <result column="userRoomId" property="userRoomId"/>
+        </association>
+
+        <!-- 映射 Amount 对象 -->
+        <association property="amount" javaType="com.springboot.springboot2.pojo.Amount">
+            <id column="amountId" property="amountId"/>
+            <result column="amountDate" property="amountDate"/>
+            <result column="amount" property="amount"/>
+            <result column="amountType" property="amountType"/>
+            <result column="isPaid" property="isPaid"/>
+            <result column="amountRoomId" property="amountRoomId"/> <!-- 对应 Amount POJO -->
+        </association>
+
+        <!-- 映射 Room 对象 -->
+        <association property="room" javaType="com.springboot.springboot2.pojo.Room">
+            <id column="roomId" property="roomId"/>
+            <result column="roomCode" property="roomCode"/>
+        </association>
+
+    </resultMap>
+
+    <!-- unpaidOwnerList 查询 SQL -->
+    <select id="unpaidOwnerList" resultMap="UnpaidOwnerMap">
+        SELECT
+        u.userid AS userId,
+        u.username,
+        u.account,
+        u.idcard,
+        u.gender,
+        u.age,
+        u.user_type AS userType,
+        u.user_status AS userStatus,
+        u.user_roomid AS userRoomId,
+
+        a.amount_id AS amountId,
+        a.amount_date AS amountDate,
+        a.amount,
+        a.amount_type AS amountType,
+        a.ispaied AS isPaied,
+        a.amount_roomid AS amountRoomId,  <!-- 对应 Amount.amountRoomId -->
+
+        r.room_id AS roomId,
+        r.room_code AS roomCode
+
+        FROM amount a
+        LEFT JOIN room r ON a.amount_roomid = r.room_id
+        LEFT JOIN user u ON r.room_id = u.user_roomid
+        WHERE a.ispaied = 2
+        AND a.amount_type = #{typeId}
+        ORDER BY a.amount_date ASC, u.username ASC
+    </select>
+
+    <!-- 新的 unpaidOwner 结果映射 -->
+    <resultMap id="unpaidOwner" type="com.springboot.springboot2.pojo.UnpaidOwner">
+        <!-- 使用已有的 baseColumns 映射 User 对象 -->
+        <association property="user" resultMap="baseColumns"/>
+
+        <!-- Amount 对象使用自动映射 -->
+        <association property="amount" javaType="com.springboot.springboot2.pojo.Amount" autoMapping="true"/>
+
+        <!-- Room 对象使用自动映射 -->
+        <association property="room" javaType="com.springboot.springboot2.pojo.Room" autoMapping="true"/>
+    </resultMap>
 
 </mapper>
