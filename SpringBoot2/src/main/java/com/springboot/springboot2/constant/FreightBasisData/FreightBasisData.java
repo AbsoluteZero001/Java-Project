@@ -1,7 +1,7 @@
 package com.springboot.springboot2.constant.FreightBasisData;
 
-import com.springboot.springboot2.pojo.FreightBasis;
 import com.springboot.springboot2.mapper.FreightBasisMapper;
+import com.springboot.springboot2.pojo.FreightBasis;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.springframework.context.annotation.Scope;
