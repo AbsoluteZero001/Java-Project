@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Random;
 
 public class ConvertUtils {
     public static Instant toInstant(String time){
@@ -15,5 +16,18 @@ public class ConvertUtils {
             throw new RuntimeException(e);
         }
         return date.toInstant();
+    }
+    public static String getCookie(int num) {
+        String string = "abcdefjhijkmlnopqrstuvwxyz";
+        StringBuffer sb = new StringBuffer();
+        Random random = new Random();
+        for (int i = 0; i < num; i++) {
+            int index = random.nextInt(string.length());
+            sb.append(string.charAt(index));
+        }
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        System.out.println(getCookie(10));
     }
 }
