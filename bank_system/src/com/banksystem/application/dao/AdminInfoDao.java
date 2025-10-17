@@ -2,6 +2,7 @@ package com.banksystem.application.dao;
 
 import com.banksystem.application.db.Database;
 import com.banksystem.application.entity.AdminInfo;
+import com.banksystem.application.utills.ConvertUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -129,4 +130,34 @@ public class AdminInfoDao {
             throw new RuntimeException(e);
         }
     }
-}
+
+    public AdminInfo queryByMobile(String mobile) {
+        //获取连接池
+        Connection conn = Database.getConn();
+        String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info where mobile = ?";
+        AdminInfo adminInfo = null;
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1,mobile);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                adminInfo = new AdminInfo();
+                adminInfo.setId(rs.getLong("id"));
+                adminInfo.setPassword(rs.getString("password"));
+                adminInfo.setMobile(rs.getString("mobile"));
+                adminInfo.setNickname(rs.getString("nickname"));
+                adminInfo.setName(rs.getString("name"));
+                adminInfo.setCreateBy(rs.getLong("create_by"));
+                adminInfo.setCreateBy(rs.getLong("update_by"));
+                adminInfo.setState(rs.getString("state"));
+                adminInfo.setDeleted(rs.getString("deleted"));
+                adminInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
+                adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
+            }
+            } catch (SQLException e) {
+            throw new RuntimeException(e);
+            }
+        return adminInfo;
+        }
+    }
+
