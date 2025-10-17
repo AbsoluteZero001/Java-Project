@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.springboot.springboot2.mapper")
-@MapperScan("com.springboot.springboot2.property.mapper")
 public class SpringBoot2Application {
     public static void main(String[] args) {
         SpringApplication.run(SpringBoot2Application.class, args);
