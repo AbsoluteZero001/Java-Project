@@ -30,7 +30,7 @@ public class BuildingController {
 
     public BuildingController(BuildingService buildingService, FloorService floorService) {
         this.buildingService = buildingService;
-        this.floorService = floorService;
+        this.floorService = floorService
     }
 
     /**
