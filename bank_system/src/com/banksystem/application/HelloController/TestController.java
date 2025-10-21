@@ -7,9 +7,11 @@ import java.util.Objects;
 import com.alibaba.fastjson.JSONObject;
 import com.banksystem.application.dao.AdminInfoDao;
 import com.banksystem.application.entity.AdminInfo;
+import com.banksystem.application.utills.ConvertUtils;
 import com.banksystem.application.utills.ErrorCode;
 import com.banksystem.application.utills.ResponseUtil;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -49,6 +51,14 @@ public class TestController extends HttpServlet {
                 return;
             }
             System.out.println(adminInfo);
+            //3.生成cookie
+            String cookieStr = ConvertUtils.getCookie(16);
+            ConvertUtils.ADMIN_LOGIN_MAP.put(cookieStr,adminInfo);
+            Cookie cookie = new Cookie("token",cookieStr);
+            resp.addCookie(cookie);
+            json.put("token",cookieStr);
+            json.put("name",adminInfo.getName());
+            ResponseUtil.success(resp,json);
             jsonObject = new JSONObject();
             jsonObject.put("adminInfo",adminInfo);
             ResponseUtil.success(resp,jsonObject);
