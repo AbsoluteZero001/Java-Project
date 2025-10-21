@@ -1,9 +1,13 @@
 package com.banksystem.application.utills;
 
+import com.banksystem.application.entity.AdminInfo;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class ConvertUtils {
@@ -27,7 +31,13 @@ public class ConvertUtils {
         }
         return sb.toString();
     }
+
+    /**
+     *管理员登录map
+     */
+    public static Map<String, AdminInfo> ADMIN_LOGIN_MAP = new HashMap<>();
+
     public static void main(String[] args) {
-        System.out.println(getCookie(10));
+        System.out.println(getCookie(12));
     }
 }
