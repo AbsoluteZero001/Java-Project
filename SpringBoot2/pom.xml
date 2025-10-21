@@ -116,6 +116,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- MyBatis-Plus 扩展 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.6</version>
+        </dependency>
+
 
         <!-- 测试 -->
         <dependency>
