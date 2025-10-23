@@ -1,5 +1,6 @@
 package com.banksystem.application.dao;
 
+import com.alibaba.fastjson.JSONArray;
 import com.banksystem.application.db.Database;
 import com.banksystem.application.entity.AdminInfo;
 import com.banksystem.application.utills.ConvertUtils;
@@ -131,14 +132,24 @@ public class AdminInfoDao {
         }
     }
 
-    public AdminInfo queryByMobile(String mobile) {
+    //public AdminInfo queryByMobile(String mobile) {
+    //2.查询全部
+    public JSONArray queryAll() {
+        JSONArray list = new JSONArray();
         //获取连接池
         Connection conn = Database.getConn();
+
+
+        AdminInfo adminInfo = new AdminInfo();
+
+
         String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info where mobile = ?";
-        AdminInfo adminInfo = null;
+        //AdminInfo adminInfo = null;
+        //ArryList<AdminInfo> adminInfos = new ArrayList<>();
+
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1,mobile);
+//            ps.setString(1,mobile);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 adminInfo = new AdminInfo();
@@ -157,7 +168,7 @@ public class AdminInfoDao {
             } catch (SQLException e) {
             throw new RuntimeException(e);
             }
-        return adminInfo;
+        return list;
         }
     }
 
