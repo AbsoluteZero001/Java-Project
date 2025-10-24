@@ -6,7 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * 登录拦截器：拦截所有需要鉴权的请求，检查是否携带 Authorization 头部。
- * 适配 Spring Boot 3.x，替代废弃的 HandlerInterceptorAdapter。
+ * 适配 Spring Boot 3.x。
  */
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -19,12 +19,17 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         // 简单校验是否存在
         if (token != null && !token.isBlank()) {
-            // 这里你可以加入 JWT 或数据库验证逻辑
+            // TODO: 可在此处添加 JWT 或数据库验证逻辑
             return true; // 放行
         } else {
             // 未登录或未携带 token
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.getWriter().write("Authorization 无信息，未登录");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/json;charset=UTF-8");
+
+            // 返回更规范的 JSON 提示
+            String json = "{\"code\":403, \"message\":\"未登录或未携带 Authorization 头部\"}";
+            response.getWriter().write(json);
             return false;
         }
     }
