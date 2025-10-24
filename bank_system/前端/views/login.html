@@ -33,23 +33,24 @@
       let data = {
         mobile,
         pwd,
-        // loginType,
-      };
+        LoginType: "admin"
+              };
       e.preventDefault();
-      let url = "http://localhost:8080/bank_system_Web_exploded";
+      let url = "http://localhost:8080";
       console.log(data);
       const res = await axios({
         method: "post",
-        url: `${url}/login`,
+        url: `${url}/bank_system_Web_exploded/login`,
         data,
       });
       console.log(res);
 
-      // if (res.data.code == 200) {
-      //   alert("登录成功");
-      //   // window.location = "./index.html";
-      // }
-      // console.log(res);
+      if (res.data.code == 200) {
+        alert("登录成功");
+        // window.location = "./index.html";
+        localStorage.setItem("token", res.data.data.token);
+      }
+      console.log(res);
     };
   </script>
 </body>

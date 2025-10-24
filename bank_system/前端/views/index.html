@@ -53,8 +53,11 @@
         // console.log([form]);
         const res = await axios({
           method: "post",
-          url: `${url}/add/admin`,
-          data,
+          url: `${url}/bank_system_Web_exploded/admin/list`,
+          // data,
+          headers: {
+            "token": localStorage.getItem("token"),
+          }
         });
         console.log(res);
       };
@@ -73,9 +76,12 @@
         e.preventDefault();
         let url = "http://localhost:8080";
         const res = await axios({
-          method: "PUT",
-          url: `${url}/set/admin`,
-          data,
+          method: "get",
+          url: `${url}/bank_system_Web_exploded/admin/list`,
+          // data,
+          headers: {
+            "token": localStorage.getItem("token"),
+          }
         });
         console.log(res);
       };

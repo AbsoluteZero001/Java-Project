@@ -19,7 +19,7 @@ public class CoreFilter implements Filter {
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         resp.setHeader("Access-Control-Max-Age", "3600");
-        resp.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type");
+        resp.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, content-type,token ");
         filterChain.doFilter(req, resp);
     }
 }

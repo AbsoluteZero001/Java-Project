@@ -140,19 +140,19 @@ public class AdminInfoDao {
         Connection conn = Database.getConn();
 
 
-        AdminInfo adminInfo = new AdminInfo();
 
 
-        String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info where mobile = ?";
+
+        String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info";
         //AdminInfo adminInfo = null;
         //ArryList<AdminInfo> adminInfos = new ArrayList<>();
 
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
+            AdminInfo adminInfo = new AdminInfo();
 //            ps.setString(1,mobile);
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                adminInfo = new AdminInfo();
                 adminInfo.setId(rs.getLong("id"));
                 adminInfo.setPassword(rs.getString("password"));
                 adminInfo.setMobile(rs.getString("mobile"));
@@ -164,6 +164,7 @@ public class AdminInfoDao {
                 adminInfo.setDeleted(rs.getString("deleted"));
                 adminInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
                 adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
+                list.add(adminInfo);
             }
             } catch (SQLException e) {
             throw new RuntimeException(e);
