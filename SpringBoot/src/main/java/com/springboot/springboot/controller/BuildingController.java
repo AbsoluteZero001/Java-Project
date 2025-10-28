@@ -16,13 +16,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 楼栋控制器类
+ * 提供楼栋相关的HTTP接口服务
+ */
 @RestController
 @Tag(name = "楼栋相关接口", description = "楼栋相关的增删改查接口")
 public class BuildingController {
 
+    /**
+     * 楼栋服务接口
+     * 通过Spring自动注入
+     */
     @Autowired
     private BuildingService buildingService;
 
+    /**
+     * 查询楼栋分页信息接口
+     * @param current 当前页码，默认为1
+     * @param size 每页显示条数，默认为10
+     * @param number 楼栋编号，可选参数
+     * @return 返回ResponsePojo包装的PageResult<Building>对象
+     */
     @GetMapping("/page/building")
     @Operation(
             summary = "查询楼栋分页信息",
