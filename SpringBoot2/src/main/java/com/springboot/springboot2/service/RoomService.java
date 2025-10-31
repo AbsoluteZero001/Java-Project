@@ -12,6 +12,6 @@ public interface RoomService {
     PageResult<Room> pageOfRoom(Map<String, String> map);
     int changeRoomStatus(List<Integer> idList, int status);
     // 新增方法：根据房间ID判断是否存在
-    boolean existsById(Short roomId);
+    //boolean existsById(Short roomId);
 }
 
