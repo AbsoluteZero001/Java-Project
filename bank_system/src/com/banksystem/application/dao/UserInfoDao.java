@@ -52,7 +52,6 @@ public class UserInfoDao {
                 UserInfo user= new UserInfo();
                 user.setCardType(rs.getString("card_type"));
                 user.setCardNo(rs.getString("card_no"));
-                user.setId(rs.getLong("id"));
                 user.setPassword(rs.getString("password"));
                 user.setNickname(rs.getString("nickname"));
                 user.setName(rs.getString("name"));
