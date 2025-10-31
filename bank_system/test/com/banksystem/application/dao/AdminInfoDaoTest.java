@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 
 public class AdminInfoDaoTest extends TestCase {
 
-
+//添加管理员测试方法
 //    public void testAddAdmin() {
 //        AdminInfoDao adminInfoDao = new AdminInfoDao();
 //        AdminInfo adminInfo = new AdminInfo();
