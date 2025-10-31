@@ -47,5 +47,10 @@ public interface RoomMapper {
  * @return 返回值类型为int，可能表示受影响的行数或操作状态码
  */
     int changeRoomStatus(@Param("idList") List<Integer> idList, @Param("status") Integer status);
-
+/**
+ * 根据房间ID获取数量
+ * @param roomId 房间ID参数
+ * @return 返回指定房间ID的数量
+ */
+    int countById(@Param("roomId") Short roomId);
 }

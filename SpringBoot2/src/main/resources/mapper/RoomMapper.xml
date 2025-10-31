@@ -92,5 +92,9 @@
         FROM room
         WHERE room_id = #{id}
     </select>
+    <!-- RoomMapper.xml -->
+    <select id="countById" resultType="int" parameterType="short">
+        SELECT COUNT(*) FROM room WHERE room_id = #{roomId}
+    </select>
 
 </mapper>

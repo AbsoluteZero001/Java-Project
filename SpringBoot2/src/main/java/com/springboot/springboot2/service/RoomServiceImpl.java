@@ -49,5 +49,10 @@ public class RoomServiceImpl implements RoomService {
     public int changeRoomStatus(List<Integer> idList, int status) {
         return roomMapper.changeRoomStatus(idList, status);
     }
+    @Override
+    public boolean existsById(Short roomId) {
+        // 调用 RoomMapper 查询房间数量，如果大于0表示存在
+        return roomMapper.countById(roomId) > 0;
+    }
 
 }
