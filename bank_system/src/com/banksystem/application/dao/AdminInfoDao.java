@@ -131,22 +131,12 @@ public class AdminInfoDao {
             throw new RuntimeException(e);
         }
     }
-
-    //public AdminInfo queryByMobile(String mobile) {
     //2.查询全部
     public JSONArray queryAll() {
         JSONArray list = new JSONArray();
         //获取连接池
         Connection conn = Database.getConn();
-
-
-
-
-
         String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info";
-        //AdminInfo adminInfo = null;
-        //ArryList<AdminInfo> adminInfos = new ArrayList<>();
-
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             AdminInfo adminInfo = new AdminInfo();
