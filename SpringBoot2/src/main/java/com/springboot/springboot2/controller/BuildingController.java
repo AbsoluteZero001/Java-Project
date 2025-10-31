@@ -114,8 +114,6 @@ public class BuildingController {
         results.put("floor", 0);
         results.put("room", 0);
 
-
-
         try {
             List<Building> buildings = buildingService.insertBuildings(
                     firstBuilding,
@@ -160,7 +158,6 @@ public class BuildingController {
             return ResponsePojo.fail(null, "参数错误");
         }
     }
-
 }
 
 
