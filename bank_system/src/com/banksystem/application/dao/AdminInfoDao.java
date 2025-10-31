@@ -13,6 +13,7 @@ import java.sql.SQLException;
 public class AdminInfoDao {
     /**
      * 添加管理员信息的方法
+     *
      * @param adminInfo 包含管理员信息的AdminInfo对象
      */
     public Long addAdmin(AdminInfo adminInfo) {
@@ -70,6 +71,7 @@ public class AdminInfoDao {
 
     /**
      * 根据管理员ID获取管理员信息的方法
+     *
      * @param id 管理员ID
      * @return AdminInfo对象，如果未找到则返回null
      */
@@ -131,6 +133,7 @@ public class AdminInfoDao {
             throw new RuntimeException(e);
         }
     }
+
     //2.查询全部
     public JSONArray queryAll() {
         JSONArray list = new JSONArray();
@@ -142,7 +145,7 @@ public class AdminInfoDao {
             AdminInfo adminInfo = new AdminInfo();
 //            ps.setString(1,mobile);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 adminInfo.setId(rs.getLong("id"));
                 adminInfo.setPassword(rs.getString("password"));
                 adminInfo.setMobile(rs.getString("mobile"));
@@ -156,10 +159,31 @@ public class AdminInfoDao {
                 adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
                 list.add(adminInfo);
             }
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
-            }
+        }
         return list;
+    }
+
+    //3.修改管理员信息
+    public void updateAdmin(AdminInfo adminInfo) {
+        //获取连接池
+        Connection conn = Database.getConn();
+        String sql = "update admin_info set password = ?, nickname = ?, name = ?, mobile = ? where id = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, adminInfo.getPassword());
+            ps.setString(2, adminInfo.getNickname());
+            ps.setString(3, adminInfo.getName());
+            ps.setString(4, adminInfo.getMobile());
+            ps.setLong(5, adminInfo.getId());
+            int i = ps.executeUpdate();
+            if (i > 0) {
+                System.out.println("修改成功");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+}
 
