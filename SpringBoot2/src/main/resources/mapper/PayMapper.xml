@@ -24,8 +24,7 @@
         ) p
         JOIN building b ON 1=1
         JOIN
-        (
-        SELECT room_id, room_floor_id FROM room
+        (SELECT room_id, room_floor_id FROM room
         <where>
             <if test="floorId != null">
                 room_floor_id = #{floorId}
@@ -52,8 +51,8 @@
             <if test="username != null and username != ''">
                 username LIKE CONCAT('%', #{username}, '%')
             </if>
-            <if test="idcard != null and idcard != ''">
-                AND idcard LIKE CONCAT('%', #{idcard}, '%')
+            <if test="idCard != null and idCard != ''">
+                AND idCard LIKE CONCAT('%', #{idCard}, '%')
             </if>
         </where>
         ) u ON u.user_roomid = payInfo.floor_id

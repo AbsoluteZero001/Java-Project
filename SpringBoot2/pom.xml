@@ -130,6 +130,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>4.8</version> <!-- 或最新稳定版本 -->
+        </dependency>
+
     </dependencies>
 
     <!-- ✅ 构建配置 -->

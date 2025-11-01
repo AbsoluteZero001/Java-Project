@@ -22,7 +22,7 @@ public interface PayMapper {
      * @param idCard     身份证号
      * @param floorId    楼层ID
      * @param buildingId 建筑ID
-     * @return 支付信息列表
+     * @return 支付信息分页结果
      */
     Page<PayInfo> selectPayInfoOnCondition(
             Page<PayInfo> page,
