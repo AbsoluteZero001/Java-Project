@@ -17,14 +17,14 @@ public class UserInfoDaoTest extends TestCase {
         UserInfoDao userInfoDao = new UserInfoDao();
         // 创建UserInfo对象并设置用户信息
         UserInfo userInfo = new UserInfo();
-        userInfo.setCardType("无限黑卡");        // 设置卡类型
-        userInfo.setCardNo("202409033627");     // 设置卡号
-        userInfo.setPassword("123456");         // 设置密码
-        userInfo.setNickname("天地银行卡");       // 设置昵称
-        userInfo.setName("Tim");               // 设置姓名
+        userInfo.setCardType("借记卡");        // 设置卡类型
+        userInfo.setCardNo("202509033628");     // 设置卡号
+        userInfo.setPassword("12345678");         // 设置密码
+        userInfo.setNickname("中国银行");       // 设置昵称
+        userInfo.setName("影视飓风");               // 设置姓名
         userInfo.setAddress("杭州");             // 设置地址
         userInfo.setIdNum("330719200009091234"); // 设置身份证号
-        userInfo.setMobile("17770177717");       // 设置手机号
+        userInfo.setMobile("18880188818");       // 设置手机号
         // 调用addOne方法添加用户信息
         userInfoDao.addOne(userInfo);
     }
@@ -37,7 +37,7 @@ public class UserInfoDaoTest extends TestCase {
     public void testGetuserByMobile() {
         // 创建UserInfoDao对象，用于数据库操作
         UserInfoDao userInfoDao = new UserInfoDao();
-        // 调用getUserByMobile方法，传入手机号"17770177717"获取用户信息
+        // 调用getUserByMobile方法，传入手机号获取用户信息
         UserInfo userByMobile = userInfoDao.getUserByMobile("17770177717");
         // 打印输出获取到的用户信息
         System.out.println(userByMobile);

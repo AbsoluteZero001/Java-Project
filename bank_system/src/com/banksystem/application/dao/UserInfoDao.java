@@ -104,7 +104,7 @@ public class UserInfoDao {
         return list;
     }
 
-    //3.修改管理员信息
+    //3.修改用户信息
     public void updateUser(UserInfo userInfo) {
         //获取连接池
         Connection conn = Database.getConn();
