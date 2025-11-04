@@ -114,7 +114,7 @@ public class UserInfoDao {
     public void updateUser(UserInfo userInfo) {
         //获取连接池
         Connection conn = Database.getConn();
-        String sql = "update usr_info set password = ?, nickname = ?, name = ?, mobile = ? where id = ?";
+        String sql = "update user_info set password = ?, nickname = ?, name = ?, mobile = ? where id = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, userInfo.getPassword());
