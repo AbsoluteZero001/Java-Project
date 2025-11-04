@@ -33,7 +33,7 @@ public class TestController extends HttpServlet {
         JSONObject jsonObject = JSONObject.parseObject(sb.toString(),JSONObject.class);
         String mobile = jsonObject.getString("mobile");
         String pwd = jsonObject.getString("pwd");
-        String LoginType = jsonObject.getString("LoginType");
+        String LoginType = jsonObject.getString("loginType");
         JSONObject json = new JSONObject();
         json.put("pwd",pwd);
         json.put("mobile",mobile);
