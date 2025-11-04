@@ -86,23 +86,23 @@ public class UserInfoDao {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                UserInfo adminInfo = new UserInfo();
-                adminInfo.setId(rs.getLong("id"));
-                adminInfo.setPassword(rs.getString("password"));
-                adminInfo.setMobile(rs.getString("mobile"));
-                adminInfo.setCardType(rs.getString("card_type"));
-                adminInfo.setCardNo(rs.getString("card_no"));
-                adminInfo.setName(rs.getString("name"));
-                adminInfo.setIdNum(rs.getString("id_num"));
-                adminInfo.setNickname(rs.getString("nickname"));
-                adminInfo.setCreateBy(rs.getLong("create_by"));
-                adminInfo.setUpdateBy(rs.getLong("update_by"));
-                adminInfo.setState(rs.getInt("state"));
-                adminInfo.setAddress(rs.getString("address"));
-                adminInfo.setDeleted(rs.getBoolean("is_deleted"));
-                adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
-                adminInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
-                list.add(adminInfo);
+                UserInfo userInfo = new UserInfo();
+                userInfo.setId(rs.getLong("id"));
+                userInfo.setPassword(rs.getString("password"));
+                userInfo.setMobile(rs.getString("mobile"));
+                userInfo.setCardType(rs.getString("card_type"));
+                userInfo.setCardNo(rs.getString("card_no"));
+                userInfo.setName(rs.getString("name"));
+                userInfo.setIdNum(rs.getString("id_num"));
+                userInfo.setNickname(rs.getString("nickname"));
+                userInfo.setCreateBy(rs.getLong("create_by"));
+                userInfo.setUpdateBy(rs.getLong("update_by"));
+                userInfo.setState(rs.getInt("state"));
+                userInfo.setAddress(rs.getString("address"));
+                userInfo.setDeleted(rs.getBoolean("is_deleted"));
+                userInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
+                userInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
+                list.add(userInfo);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
