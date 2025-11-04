@@ -53,9 +53,9 @@ public class UpdateAdmin extends HttpServlet {
             adminInfo.setPassword(password);
             adminInfo.setName(name);
         // 调用adminInfoDao的updateAdmin方法更新管理员信息
-            adminInfoDao.updateAdmin( adminInfo );
+            adminInfoDao.updateAdmin(adminInfo);
         // 向客户端返回成功响应
-            ResponseUtil.success(resp,null );
+            ResponseUtil.success(resp, null);
 
 
         }
