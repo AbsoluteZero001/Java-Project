@@ -7,21 +7,21 @@
 
     <!-- ===================== 基础结果映射 ===================== -->
     <resultMap id="baseColumns" type="com.springboot.springboot2.pojo.User">
-        <id column="userid" property="userId"/>
-        <result column="username" property="username"/>
-        <result column="account" property="account"/>
-        <result column="idcard" property="idcard"/>
-        <result column="gender" property="gender"/>
-        <result column="age" property="age"/>
-        <result column="user_type" property="userType"/>
-        <result column="user_status" property="userStatus"/>
-        <result column="user_roomid" property="userRoomId"/>
+        <id column="userid" property="userId" javaType="java.lang.Integer"/>
+        <result column="username" property="username" javaType="java.lang.String"/>
+        <result column="account" property="account" javaType="java.lang.String"/>
+        <result column="idcard" property="idcard" javaType="java.lang.String"/>
+        <result column="gender" property="gender" javaType="java.lang.Short"/>
+        <result column="age" property="age" javaType="java.lang.Short"/>
+        <result column="user_type" property="userType" javaType="java.lang.Long"/>
+        <result column="user_status" property="userStatus" javaType="java.lang.Long"/>
+        <result column="user_roomid" property="userRoomId" javaType="java.lang.Short"/>
     </resultMap>
 
     <!-- 业主与房间关联 -->
     <resultMap id="ownRoom" type="com.springboot.springboot2.pojo.User" extends="baseColumns">
-        <association property="rooms" column="user_roomid" javaType="com.springboot.springboot2.pojo.Room"
-                     select="com.springboot.springboot2.mapper.RoomMapper.roomById"/>
+        <collection property="rooms" ofType="com.springboot.springboot2.pojo.Room"
+                    column="user_roomid" select="com.springboot.springboot2.mapper.RoomMapper.roomById"/>
     </resultMap>
 
     <!-- ===================== 新增用户 ===================== -->
@@ -66,7 +66,7 @@
         SELECT COUNT(*) FROM user WHERE account = #{account}
     </select>
 
-    <!-- 根据 ID 查询用户信息（对应 queryById） -->
+    <!-- ===================== 根据 ID 查询用户 ===================== -->
     <select id="queryById" resultMap="baseColumns">
         SELECT userid AS userId, username, account, password, idcard, gender, age,
                user_type AS userType, user_status AS userStatus, user_roomid AS userRoomId
@@ -76,9 +76,13 @@
 
     <!-- ===================== 分页查询业主 ===================== -->
     <select id="owners" resultMap="ownRoom">
-        SELECT
-            userid, username, gender, age,
-            user_status AS userStatus, user_roomid AS userRoomId
+        SELECT userid,
+               username,
+               gender,
+               age,
+               user_type,
+               user_status,
+               user_roomid
         FROM user
         WHERE user_type = 3
     </select>
@@ -92,30 +96,18 @@
 
     <!-- ===================== UnpaidOwner 映射 ===================== -->
     <resultMap id="UnpaidOwnerMap" type="com.springboot.springboot2.pojo.UnpaidOwner">
-        <association property="user" javaType="com.springboot.springboot2.pojo.User">
-            <id column="userid" property="userId"/>
-            <result column="username" property="username"/>
-            <result column="account" property="account"/>
-            <result column="idcard" property="idcard"/>
-            <result column="gender" property="gender"/>
-            <result column="age" property="age"/>
-            <result column="user_type" property="userType"/>
-            <result column="user_status" property="userStatus"/>
-            <result column="user_roomid" property="userRoomId"/>
-        </association>
-
+        <association property="user" javaType="com.springboot.springboot2.pojo.User" resultMap="baseColumns"/>
         <association property="amount" javaType="com.springboot.springboot2.pojo.Amount">
-            <id column="amount_id" property="amountId"/>
-            <result column="amount_date" property="amountDate"/>
-            <result column="amount" property="amount"/>
-            <result column="amount_type" property="amountType"/>
-            <result column="ispaied" property="isPaid"/>
-            <result column="amount_roomid" property="amountRoomId"/>
+            <id column="amount_id" property="amountId" javaType="java.lang.Integer"/>
+            <result column="amount_date" property="amountDate" javaType="java.util.Date"/>
+            <result column="amount" property="amount" javaType="java.math.BigDecimal"/>
+            <result column="amount_type" property="amountType" javaType="java.lang.Integer"/>
+            <result column="ispaied" property="isPaid" javaType="java.lang.Integer"/>
+            <result column="amount_roomid" property="amountRoomId" javaType="java.lang.Integer"/>
         </association>
-
         <association property="room" javaType="com.springboot.springboot2.pojo.Room">
-            <id column="room_id" property="roomId"/>
-            <result column="room_code" property="roomCode"/>
+            <id column="room_id" property="roomId" javaType="java.lang.Integer"/>
+            <result column="room_code" property="roomCode" javaType="java.lang.String"/>
         </association>
     </resultMap>
 

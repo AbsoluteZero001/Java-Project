@@ -111,10 +111,10 @@ public class UserController {
             @RequestParam Short age,
 
             @Parameter(description = "用户类型 1=管理员,2=员工,3=业主", required = true, example = "3")
-            @RequestParam Short userType,
+            @RequestParam Long userType,
 
             @Parameter(description = "用户状态 1=正常,2=禁用,3=未激活", required = false, example = "3")
-            @RequestParam(required = false) Short userStatus,
+            @RequestParam(required = false) Long userStatus,
 
             @Parameter(description = "房间ID（room_id）", required = true, example = "11")
             @RequestParam Short userRoomId
@@ -126,14 +126,14 @@ public class UserController {
             user.setIdcard(idcard);
             user.setGender(gender);
             user.setAge(age);
-            user.setUserType(Integer.valueOf(userType));
-            user.setUserRoomId(null); //不指定房间
+            user.setUserType(userType);
+            user.setUserRoomId(userRoomId); //不指定房间
 
             // ----- 默认用户状态 -----
             if (userStatus == null) {
-                user.setUserStatus((int) 3); // 未激活
+                user.setUserStatus(3L); // 未激活
             } else {
-                user.setUserStatus(Integer.valueOf(userStatus));
+                user.setUserStatus(userStatus);
             }
 
             // ----- 自动生成账号 -----
