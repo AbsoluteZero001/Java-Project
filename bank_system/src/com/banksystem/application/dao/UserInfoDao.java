@@ -88,20 +88,20 @@ public class UserInfoDao {
             while (rs.next()) {
                 UserInfo userInfo = new UserInfo();
                 userInfo.setId(rs.getLong("id"));
-                userInfo.setPassword(rs.getString("password"));
-                userInfo.setMobile(rs.getString("mobile"));
                 userInfo.setCardType(rs.getString("card_type"));
                 userInfo.setCardNo(rs.getString("card_no"));
-                userInfo.setName(rs.getString("name"));
-                userInfo.setIdNum(rs.getString("id_num"));
+                userInfo.setPassword(rs.getString("password"));
                 userInfo.setNickname(rs.getString("nickname"));
+                userInfo.setName(rs.getString("name"));
+                userInfo.setAddress(rs.getString("address"));
+                userInfo.setIdNum(rs.getString("id_num"));
+                userInfo.setMobile(rs.getString("mobile"));
+                userInfo.setState(rs.getInt("state"));
+                userInfo.setDeleted(rs.getBoolean("is_deleted"));
                 userInfo.setCreateBy(rs.getLong("create_by"));
                 userInfo.setUpdateBy(rs.getLong("update_by"));
-                userInfo.setState(rs.getInt("state"));
-                userInfo.setAddress(rs.getString("address"));
-                userInfo.setDeleted(rs.getBoolean("is_deleted"));
-                userInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
                 userInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
+                userInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
                 list.add(userInfo);
             }
         } catch (SQLException e) {
