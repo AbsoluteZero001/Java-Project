@@ -23,7 +23,7 @@ public class UserInfoDaoTest extends TestCase {
         userInfo.setNickname("中国银行");       // 设置昵称
         userInfo.setName("影视飓风");               // 设置姓名
         userInfo.setAddress("杭州");             // 设置地址
-        userInfo.setIdNum("330719200009091234"); // 设置身份证号
+        userInfo.setIdNum("510711200009091234"); // 设置身份证号
         userInfo.setMobile("18880188818");       // 设置手机号
         // 调用addOne方法添加用户信息
         userInfoDao.addOne(userInfo);
@@ -38,7 +38,7 @@ public class UserInfoDaoTest extends TestCase {
         // 创建UserInfoDao对象，用于数据库操作
         UserInfoDao userInfoDao = new UserInfoDao();
         // 调用getUserByMobile方法，传入手机号获取用户信息
-        UserInfo userByMobile = userInfoDao.getUserByMobile("17770177717");
+        UserInfo userByMobile = userInfoDao.getUserByMobile("18880188818");
         // 打印输出获取到的用户信息
         System.out.println(userByMobile);
     }
