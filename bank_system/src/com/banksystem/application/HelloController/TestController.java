@@ -1,9 +1,5 @@
 package com.banksystem.application.HelloController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.Objects;
-
 import com.alibaba.fastjson.JSONObject;
 import com.banksystem.application.dao.AdminInfoDao;
 import com.banksystem.application.dao.UserInfoDao;
@@ -13,11 +9,15 @@ import com.banksystem.application.utills.ConvertUtils;
 import com.banksystem.application.utills.ErrorCode;
 import com.banksystem.application.utills.ResponseUtil;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.Objects;
 
 /**
  * 登录控制器类
@@ -88,7 +88,7 @@ public class TestController extends HttpServlet {
             //用户登录逻辑
             System.out.println("这是用户端");
             UserInfoDao userInfoDao = new UserInfoDao();
-            UserInfo userInfo = userInfoDao.getUserByMobile(mobile);
+            UserInfo userInfo = userInfoDao.queryByMobile(mobile);
             if (Objects.isNull(userInfo)) {
                 ResponseUtil.fail(resp, ErrorCode.USER_NOT_EXIST);
                 return;

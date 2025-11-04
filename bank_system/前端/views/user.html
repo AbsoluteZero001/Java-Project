@@ -8,7 +8,8 @@
     <script src="../assets/js/axios.js"></script>
   </head>
   <body>
-    <button>新增管理员</button><br />
+  <button>新增用户</button>
+  <br/>
     <table>
       <thead>
         <tr>
@@ -24,7 +25,7 @@
       </thead>
       <tbody></tbody>
     </table>
-    修改管理员
+  修改用户
     <form>
       <label for="mobile">
         手机号：
@@ -63,7 +64,7 @@
       btn.onclick = async (e) => {
         const mobile = document.querySelector("#mobile").value;
         const name = document.querySelector("#name").value;
-        const nickname = document.querySelector("#nickName").value;
+          const nickname = document.querySelector("#nickname").value;
         const pwd = document.querySelector("#pwd").value;
         let pm = {
           id: data.id,
@@ -90,7 +91,7 @@
       btn1.onclick = async (e) => {
         const mobile = document.querySelector("#mobile").value;
         const name = document.querySelector("#name").value;
-        const nickname = document.querySelector("#nickName").value;
+          const nickname = document.querySelector("#nickname").value;
         const pwd = document.querySelector("#pwd").value;
         let data = {
           mobile,
@@ -112,7 +113,7 @@
       (async function () {
         let url = "http://localhost:8080";
         const res = await axios({
-          methods: "get",
+            methods: "post",
           url: `${url}/user/list`,
           headers: {
             token: localStorage.getItem("token"),
@@ -155,7 +156,7 @@
 
             const mobile = document.querySelector("#mobile");
             const name = document.querySelector("#name");
-            const nickname = document.querySelector("#nickName");
+              const nickname = document.querySelector("#nickname");
             const pwd = document.querySelector("#pwd");
             data = {
               mobile: item.mobile,

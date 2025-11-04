@@ -2,22 +2,17 @@ package com.banksystem.application.dao;
 
 import com.alibaba.fastjson.JSONArray;
 import com.banksystem.application.db.Database;
-import com.banksystem.application.entity.AdminInfo;
 import com.banksystem.application.entity.UserInfo;
 import com.banksystem.application.utills.ConvertUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserInfoDao {
     public Long addOne(UserInfo userInfo) {
         Long id = 0L;
         Connection conn = Database.getConn();
-        String sql = "INSERT INTO user_info (card_type, card_no, password, nickname, " +
-                "name, address, id_num,mobile) VALUES (?,?,?,?,?,?,?,?)";
+        String sql = "insert into user_info ( card_type, card_no, password, nickname, name, " +
+                "address, id_num, mobile) value (?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, userInfo.getCardType());
@@ -35,7 +30,6 @@ public class UserInfoDao {
                 if (rs.next()) {
                     id = rs.getLong(1);
                 }
-
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,60 +37,72 @@ public class UserInfoDao {
         return id;
     }
 
-    // 1.根据 mobile 查询 UserInfo
-    public static UserInfo getUserByMobile(String mobile) {
+    public UserInfo queryByMobile(String mobile) {
+        // 获取连接池
         Connection conn = Database.getConn();
-        String sql = "SELECT card_type, card_no, password, nickname, name, address, id_num,mobile FROM user_info WHERE mobile =?";
+        String sql = "select id, card_type, card_no, password, nickname, name, address, " +
+                "id_num, mobile, state, is_deleted, create_by, update_by," +
+                " create_time, update_time from user_info where " +
+                "state = 1 and mobile = ?";
+        UserInfo adminInfo = null;
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, mobile);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                UserInfo user= new UserInfo();
-                user.setCardType(rs.getString("card_type"));
-                user.setCardNo(rs.getString("card_no"));
-                user.setPassword(rs.getString("password"));
-                user.setNickname(rs.getString("nickname"));
-                user.setName(rs.getString("name"));
-                user.setAddress(rs.getString("address"));
-                user.setIdNum(rs.getString("id_num"));
-                user.setMobile(rs.getString("mobile"));
-                return user;
+            while (rs.next()) {
+                adminInfo = new UserInfo();
+                adminInfo.setId(rs.getLong("id"));
+                adminInfo.setPassword(rs.getString("password"));
+                adminInfo.setMobile(rs.getString("mobile"));
+                adminInfo.setCardType(rs.getString("card_type"));
+                adminInfo.setCardNo(rs.getString("card_no"));
+                adminInfo.setName(rs.getString("name"));
+                adminInfo.setIdNum(rs.getString("id_num"));
+                adminInfo.setNickname(rs.getString("nickname"));
+                adminInfo.setCreateBy(rs.getLong("create_by"));
+                adminInfo.setUpdateBy(rs.getLong("update_by"));
+                adminInfo.setState(rs.getInt("state"));
+                adminInfo.setAddress(rs.getString("address"));
+                adminInfo.setDeleted(rs.getBoolean("is_deleted"));
+                adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
+                adminInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null; // 没有找到
+        return adminInfo;
     }
-    //2.查询全部
-    public JSONArray queryAll() {
+
+    // 2.查询全部
+    public JSONArray queryByAll() {
         JSONArray list = new JSONArray();
-        //获取连接池
+        // 获取连接池
         Connection conn = Database.getConn();
         String sql = "select id, card_type, card_no, password, nickname, name, address, " +
-                "id_num,mobile, create_by, update_by, state, deleted, create_time, update_time from user_info";
+                "id_num, mobile, state, is_deleted, create_by, update_by," +
+                " create_time, update_time from user_info where " +
+                "state = 1";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-//            ps.setString(1,mobile);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                UserInfo userInfo = new UserInfo();
-                userInfo.setId(rs.getLong("id"));
-                userInfo.setPassword(rs.getString("password"));
-                userInfo.setMobile(rs.getString("mobile"));
-                userInfo.setCardType(rs.getString("card_type"));
-                userInfo.setCardNo(rs.getString("card_no"));
-                userInfo.setName(rs.getString("name"));
-                userInfo.setIdNum(rs.getString("id_num"));
-                userInfo.setNickname(rs.getString("nickname"));
-                userInfo.setCreateBy(rs.getLong("create_by"));
-                userInfo.setUpdateBy(rs.getLong("update_by"));
-                userInfo.setState(rs.getInt("state"));
-                userInfo.setAddress(rs.getString("address"));
-                userInfo.setDeleted(rs.getBoolean("deleted"));
-                userInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
-                userInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
-                list.add(userInfo);
+                UserInfo adminInfo = new UserInfo();
+                adminInfo.setId(rs.getLong("id"));
+                adminInfo.setPassword(rs.getString("password"));
+                adminInfo.setMobile(rs.getString("mobile"));
+                adminInfo.setCardType(rs.getString("card_type"));
+                adminInfo.setCardNo(rs.getString("card_no"));
+                adminInfo.setName(rs.getString("name"));
+                adminInfo.setIdNum(rs.getString("id_num"));
+                adminInfo.setNickname(rs.getString("nickname"));
+                adminInfo.setCreateBy(rs.getLong("create_by"));
+                adminInfo.setUpdateBy(rs.getLong("update_by"));
+                adminInfo.setState(rs.getInt("state"));
+                adminInfo.setAddress(rs.getString("address"));
+                adminInfo.setDeleted(rs.getBoolean("is_deleted"));
+                adminInfo.setUpdateTime(ConvertUtils.toInstant(rs.getString("update_time")));
+                adminInfo.setCreateTime(ConvertUtils.toInstant(rs.getString("create_time")));
+                list.add(adminInfo);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -108,7 +114,7 @@ public class UserInfoDao {
     public void updateUser(UserInfo userInfo) {
         //获取连接池
         Connection conn = Database.getConn();
-        String sql = "update user_info set password = ?, nickname = ?, name = ?, mobile = ? where id = ?";
+        String sql = "update usr_info set password = ?, nickname = ?, name = ?, mobile = ? where id = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, userInfo.getPassword());
@@ -124,4 +130,5 @@ public class UserInfoDao {
             throw new RuntimeException(e);
         }
     }
+
 }

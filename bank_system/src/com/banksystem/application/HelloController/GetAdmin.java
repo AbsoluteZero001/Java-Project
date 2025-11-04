@@ -2,21 +2,17 @@ package com.banksystem.application.HelloController;
 
 import com.alibaba.fastjson.JSONArray;
 import com.banksystem.application.dao.AdminInfoDao;
-import com.banksystem.application.utills.ConvertUtils;
-import com.banksystem.application.utills.ErrorCode;
 import com.banksystem.application.utills.ResponseUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.Objects;
 
 @WebServlet("/admin/list")
-public class GetCookie extends HttpServlet {
+public class GetAdmin extends HttpServlet {
 
     private  AdminInfoDao adminInfoDao = new AdminInfoDao();
 

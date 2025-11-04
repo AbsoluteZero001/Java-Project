@@ -38,7 +38,7 @@ public class UserInfoDaoTest extends TestCase {
         // 创建UserInfoDao对象，用于数据库操作
         UserInfoDao userInfoDao = new UserInfoDao();
         // 调用getUserByMobile方法，传入手机号获取用户信息
-        UserInfo userByMobile = userInfoDao.getUserByMobile("18880188818");
+        UserInfo userByMobile = userInfoDao.queryByMobile("18880188818");
         // 打印输出获取到的用户信息
         System.out.println(userByMobile);
     }
