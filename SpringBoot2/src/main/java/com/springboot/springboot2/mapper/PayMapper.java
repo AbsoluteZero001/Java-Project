@@ -12,18 +12,6 @@ import java.time.LocalDate;
 @Mapper
 public interface PayMapper {
 
-    /**
-     * 按条件分页查询支付信息
-     *
-     * @param page       MyBatis-Plus 分页对象
-     * @param start      开始日期
-     * @param end        结束日期
-     * @param username   用户姓名
-     * @param idCard     身份证号
-     * @param floorId    楼层ID
-     * @param buildingId 建筑ID
-     * @return 支付信息分页结果
-     */
     Page<PayInfo> selectPayInfoOnCondition(
             Page<PayInfo> page,
             @Param("start") LocalDate start,
@@ -33,4 +21,7 @@ public interface PayMapper {
             @Param("floorId") Integer floorId,
             @Param("buildingId") Integer buildingId
     );
+
+    // 子查询
+    PayInfo queryById(Integer id);
 }

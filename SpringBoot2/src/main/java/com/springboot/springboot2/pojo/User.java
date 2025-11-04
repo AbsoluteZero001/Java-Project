@@ -22,7 +22,7 @@ public class User {
     private String password;
 
     @Schema(description = "用户类型：1-管理员，2-物业，3-业主", allowableValues = {"1","2","3"}, example = "3")
-    private Short userType;
+    private Integer userType;
 
     @Schema(description = "用户ID（主键）")
     private Integer userId;
@@ -34,10 +34,10 @@ public class User {
     private Short age;
 
     @Schema(description = "用户状态：1-正常，2-禁用，3-未激活", allowableValues = {"1","2","3"}, example = "3")
-    private Short userStatus;
+    private Integer userStatus;
 
     @Schema(description = "用户所属房屋ID（下拉选择有效房间）", example = "11")
-    private Short userRoomId;
+    private Integer userRoomId;
 
     @Schema(description = "身份证号", example = "510101200001010001")
     private String idcard;

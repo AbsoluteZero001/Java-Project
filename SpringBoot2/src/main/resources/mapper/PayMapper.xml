@@ -5,57 +5,78 @@
 
 <mapper namespace="com.springboot.springboot2.mapper.PayMapper">
 
-    <select id="selectPayInfoOnCondition" resultType="com.springboot.springboot2.pojo.PayInfo">
+    <!-- 主查询：根据条件分页查询支付信息 -->
+    <select id="selectPayInfoOnCondition" resultMap="payInfoMap">
         SELECT
-        payInfo.pay_id,
-        payInfo.building_id,
-        payInfo.room_id,
-        u.userid
-        FROM
-        (
-        SELECT p.pay_id, b.building_id, r.room_id, f.floor_id
-        FROM
-        (SELECT pay_id, pay_room_id, pay_date FROM pay
+        p.pay_id,
+        p.pay_date,
+        p.pay AS pay,               <!-- ✅ 改 pay_amount 为 pay -->
+        b.building_id,
+        b.building_name,
+        r.room_id,
+        r.room_code AS roomCode,    <!-- ✅ 改 room_number 为 room_code，并加别名 -->
+        u.userId,
+        u.username,
+        u.idcard AS idcard          <!-- ✅ 保持一致，小写 -->
+        FROM pay p
+        JOIN room r ON p.pay_room_id = r.room_id
+        JOIN floor f ON r.room_floor_id = f.floor_id
+        JOIN building b ON f.belong_building = b.building_id
+        LEFT JOIN user u ON u.user_roomid = r.room_id
         <where>
             <if test="start != null and end != null">
-                pay_date BETWEEN #{start} AND #{end}
+                p.pay_date BETWEEN #{start} AND #{end}
             </if>
-        </where>
-        ) p
-        JOIN building b ON 1=1
-        JOIN
-        (SELECT room_id, room_floor_id FROM room
-        <where>
-            <if test="floorId != null">
-                room_floor_id = #{floorId}
-            </if>
-        </where>
-        UNION
-        SELECT r.room_id, r.room_floor_id
-        FROM room r
-        JOIN floor f ON r.room_floor_id = f.floor_id
-        <where>
-            <if test="buildingId != null and floorId == null">
-                f.belong_building = #{buildingId}
-            </if>
-        </where>
-        ) r ON p.pay_room_id = r.room_id
-        JOIN floor f ON r.room_floor_id = f.floor_id
-        JOIN building b2 ON f.belong_building = b2.building_id
-        ) payInfo
-        LEFT JOIN
-        (
-        SELECT userid, user_roomid
-        FROM user
-        <where>
             <if test="username != null and username != ''">
-                username LIKE CONCAT('%', #{username}, '%')
+                AND u.username LIKE CONCAT('%', #{username}, '%')
             </if>
             <if test="idCard != null and idCard != ''">
-                AND idCard LIKE CONCAT('%', #{idCard}, '%')
+                AND u.idcard LIKE CONCAT('%', #{idCard}, '%')
+            </if>
+            <if test="floorId != null">
+                AND f.floor_id = #{floorId}
+            </if>
+            <if test="buildingId != null">
+                AND b.building_id = #{buildingId}
             </if>
         </where>
-        ) u ON u.user_roomid = payInfo.floor_id
+    </select>
+
+    <!-- resultMap 映射 PayInfo 及其子对象 -->
+    <resultMap id="payInfoMap" type="com.springboot.springboot2.pojo.PayInfo">
+
+        <!-- 支付信息 -->
+        <association property="pay" javaType="com.springboot.springboot2.pojo.Pay">
+            <id column="pay_id" property="payId"/>
+            <result column="pay_date" property="payDate"/>
+            <result column="pay" property="pay"/> <!-- ✅ 修改 -->
+        </association>
+
+        <!-- 建筑信息 -->
+        <association property="building" javaType="com.springboot.springboot2.pojo.Building">
+            <id column="building_id" property="buildingId"/>
+            <result column="building_name" property="buildingName"/>
+        </association>
+
+        <!-- 房间信息 -->
+        <association property="room" javaType="com.springboot.springboot2.pojo.Room">
+            <id column="room_id" property="roomId"/>
+            <result column="roomCode" property="roomCode"/> <!-- ✅ 修改 -->
+        </association>
+
+        <!-- 用户信息 -->
+        <association property="user" javaType="com.springboot.springboot2.pojo.User">
+            <id column="userId" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="idcard" property="idcard"/> <!-- ✅ 修改 -->
+        </association>
+    </resultMap>
+
+    <!-- PayMapper 子查询：根据 pay_id 获取完整支付记录 -->
+    <select id="queryById" resultType="com.springboot.springboot2.pojo.Pay">
+        SELECT *
+        FROM pay
+        WHERE pay_id = #{id}
     </select>
 
 </mapper>

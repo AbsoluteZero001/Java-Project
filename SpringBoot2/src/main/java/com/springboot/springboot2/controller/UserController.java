@@ -126,14 +126,14 @@ public class UserController {
             user.setIdcard(idcard);
             user.setGender(gender);
             user.setAge(age);
-            user.setUserType(userType);
+            user.setUserType(Integer.valueOf(userType));
             user.setUserRoomId(null); //不指定房间
 
             // ----- 默认用户状态 -----
             if (userStatus == null) {
-                user.setUserStatus((short) 3); // 未激活
+                user.setUserStatus((int) 3); // 未激活
             } else {
-                user.setUserStatus(userStatus);
+                user.setUserStatus(Integer.valueOf(userStatus));
             }
 
             // ----- 自动生成账号 -----
