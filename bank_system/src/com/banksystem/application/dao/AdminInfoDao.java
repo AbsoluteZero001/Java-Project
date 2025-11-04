@@ -142,10 +142,10 @@ public class AdminInfoDao {
         String sql = "select id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time from admin_info";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
-            AdminInfo adminInfo = new AdminInfo();
 //            ps.setString(1,mobile);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                AdminInfo adminInfo = new AdminInfo();
                 adminInfo.setId(rs.getLong("id"));
                 adminInfo.setPassword(rs.getString("password"));
                 adminInfo.setMobile(rs.getString("mobile"));

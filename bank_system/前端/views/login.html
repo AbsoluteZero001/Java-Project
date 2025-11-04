@@ -40,14 +40,14 @@
       console.log(data);
       const res = await axios({
         method: "post",
-        url: `${url}/bank_system_Web_exploded/login`,
+        url: `${url}/login`,
         data,
       });
       console.log(res);
 
       if (res.data.code == 200) {
         alert("登录成功");
-        // window.location = "./index.html";
+        window.location = "./index.html";
         localStorage.setItem("token", res.data.data.token);
       }
       console.log(res);

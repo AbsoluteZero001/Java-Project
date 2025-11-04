@@ -21,14 +21,14 @@ public class GetCookie extends HttpServlet {
     private  AdminInfoDao adminInfoDao = new AdminInfoDao();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String token = req.getHeader("token");
-        if (Objects.isNull(ConvertUtils.ADMIN_LOGIN_MAP.get(token))) {
-//            resp.sendRedirect("/login");
-            ResponseUtil.fail(resp,ErrorCode.NOT_LOGIN);
-            return;
-        }
+//        String token = req.getHeader("token");
+//        if (Objects.isNull(ConvertUtils.ADMIN_LOGIN_MAP.get(token))) {
+////            resp.sendRedirect("/login");
+//            ResponseUtil.fail(resp,ErrorCode.NOT_LOGIN);
+//            return;
+//        }
         JSONArray adminList = adminInfoDao.queryAll();
         ResponseUtil.success(resp, adminList);
 

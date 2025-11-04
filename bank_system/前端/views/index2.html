@@ -128,7 +128,7 @@
         const strList = res.data.data.map((item) => {
           return `<tr>
           <td>${item.id}</td>
-          <td>${item.nickName}</td>
+          <td>${item.nickname}</td>
           <td>${item.name}</td>
           <td>${item.password}</td>
           <td>${new Date(item.createTime).toLocaleDateString()}</td>
@@ -154,13 +154,13 @@
             data = {
               mobile: item.mobile,
               name: item.name,
-              nickname: item.nickName,
+              nickname: item.nickname,
               pwd: item.password,
               id: item.id,
             };
             mobile.value = item.mobile;
             name.value = item.name;
-            nickName.value = item.nickName;
+            nickName.value = item.nickname;
             pwd.value = item.password;
           });
         });
