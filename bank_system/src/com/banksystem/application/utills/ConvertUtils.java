@@ -20,6 +20,7 @@ public class ConvertUtils {
      * @param time 时间字符串，格式为"yyyy-MM-dd HH:mm:ss"
      * @return 转换后的Instant对象
      */
+
     public static Instant toInstant(String time){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date;
@@ -30,6 +31,7 @@ public class ConvertUtils {
         }
         return date.toInstant();
     }
+
     /**
      * 生成指定长度的随机字符串
      * @param num 要生成的字符串长度
