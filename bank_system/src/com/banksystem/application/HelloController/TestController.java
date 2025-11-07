@@ -2,6 +2,7 @@ package com.banksystem.application.HelloController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.banksystem.application.dao.AdminInfoDao;
+import com.banksystem.application.dao.SystemLogDao;
 import com.banksystem.application.dao.UserInfoDao;
 import com.banksystem.application.entity.AdminInfo;
 import com.banksystem.application.entity.UserInfo;
@@ -27,6 +28,10 @@ import java.util.Objects;
 public class TestController extends HttpServlet {
     // 管理员数据访问对象
     private AdminInfoDao AdminInfoDao = new AdminInfoDao();
+    // 用户数据访问对象
+    private UserInfoDao userInfoDao = new UserInfoDao();
+    // 系统日志数据访问对象
+    private SystemLogDao systemLogDao = new SystemLogDao();
 
     /**
      * 处理POST请求
