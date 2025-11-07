@@ -62,9 +62,10 @@
       };
       // 修改提交
       btn.onclick = async (e) => {
+        console.log("提交修改")
         const mobile = document.querySelector("#mobile").value;
         const name = document.querySelector("#name").value;
-          const nickname = document.querySelector("#nickname").value;
+        const nickname = document.querySelector("#nickName").value;
         const pwd = document.querySelector("#pwd").value;
         let pm = {
           id: data.id,
@@ -86,6 +87,7 @@
           },
         });
         console.log(res);
+        initList()
       };
       // 取消
       btn1.onclick = async (e) => {
@@ -110,10 +112,11 @@
         console.log(res);
       };
       // 获取列表
-      (async function () {
+      // ()();
+      async function initList() {
         let url = "http://localhost:8080";
         const res = await axios({
-            methods: "post",
+          methods: "post",
           url: `${url}/user/list`,
           headers: {
             token: localStorage.getItem("token"),
@@ -133,11 +136,11 @@
           <td>${new Date(item.createTime).toLocaleDateString()}</td>
           <td>${new Date(item.updateTime).toLocaleDateString()}</td>
           <td>${
-            item.cardType == 1
-              ? "储蓄卡"
-              : item.cardType == 2
-              ? "信用卡"
-              : "社保卡"
+                  item.cardType == 1
+                          ? "储蓄卡"
+                          : item.cardType == 2
+                                  ? "信用卡"
+                                  : "社保卡"
           }</td>
           <td>
             <button id="update" >修改</button>
@@ -156,12 +159,12 @@
 
             const mobile = document.querySelector("#mobile");
             const name = document.querySelector("#name");
-              const nickName = document.querySelector("#nickName");
+            const nickName = document.querySelector("#nickName");
             const pwd = document.querySelector("#pwd");
             data = {
               mobile: item.mobile,
               name: item.name,
-                nickName: item.nickname,
+              nickName: item.nickname,
               pwd: item.password,
               id: item.id,
             };
@@ -179,7 +182,9 @@
             alert("修改");
           });
         });
-      })();
+      }
+
+      initList()
     </script>
   </body>
 </html>
