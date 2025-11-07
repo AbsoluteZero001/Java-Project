@@ -4,17 +4,16 @@ import java.time.Instant;
 
 public class UserAmount {
     private Long id;
-    private Long userID; // 用户id
-    private Long amount; //
+    private Long userId; // ✅ 统一命名规范
+    private Long amount;
     private Long balance;
     private Integer status; // 状态 0-禁用 1-启用
-    private Boolean deleted; // 是否删除 1-是 0-否
+    private Boolean deleted; // 是否删除 true-是 false-否
     private Long createBy;
-    private Long updateBy; // 更新人id
+    private Long updateBy;
     private Instant createTime;
-    private Instant updateTime; // 更新时间
+    private Instant updateTime;
 
-    //公有转私有
     public Long getId() {
         return id;
     }
@@ -23,12 +22,12 @@ public class UserAmount {
         this.id = id;
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getAmount() {
