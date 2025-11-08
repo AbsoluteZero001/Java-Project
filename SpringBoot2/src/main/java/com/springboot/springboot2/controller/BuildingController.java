@@ -142,6 +142,7 @@ public class BuildingController {
             @Parameter(name = "idList", description = "需修改状态的楼栋 id 列表", required = true),
             @Parameter(name = "status", description = "修改后的状态", required = true)
     })
+
     @PutMapping("/updatestatus")
     public ResponsePojo<Integer> changeBuildingStatus(
             @RequestParam("idList") List<Integer> idList,
