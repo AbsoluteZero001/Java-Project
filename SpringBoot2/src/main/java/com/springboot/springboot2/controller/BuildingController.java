@@ -137,6 +137,7 @@ public class BuildingController {
             return ResponsePojo.fail(null, e.getMessage());
         }
     }
+
     @Operation(summary = "批量修改多个建筑的状态")
     @Parameters({
             @Parameter(name = "idList", description = "需修改状态的楼栋 id 列表", required = true),
