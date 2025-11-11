@@ -23,7 +23,7 @@ import java.nio.charset.StandardCharsets;
  * 用户控制器
  */
 @Tag(name = "业主相关 API")
-@RestController
+@RestController //转换为 JSON
 @RequestMapping("/user")
 public class UserController {
 
