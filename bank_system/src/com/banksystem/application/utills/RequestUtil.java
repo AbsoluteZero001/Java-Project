@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.banksystem.application.entity.AdminInfo;
 import com.banksystem.application.entity.UserInfo;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -59,4 +60,14 @@ public class RequestUtil {
     }
     return ConvertUtils.USER_LOGIN_MAP.get(token);
   }
+
+  // 在RequestUtil.java文件中添加以下方法
+  public static void fail(HttpServletResponse response, ErrorCode errorCode) throws IOException {
+    response.setContentType("application/json;charset=UTF-8");
+    JSONObject result = new JSONObject();
+    result.put("code", errorCode.getCode());
+    result.put("message", errorCode.getMessage());
+    response.getWriter().write(result.toJSONString());
+  }
+
 }
