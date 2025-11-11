@@ -34,6 +34,11 @@ public class AddUserController extends HttpServlet {
             return;
         }
         UserInfo userInfo1 = new UserInfo();
+        userInfo1.setName(name);
+        userInfo1.setPassword(password);
+        userInfo1.setNickname(nickname);
+        userInfo1.setMobile(mobile);
+
 
     }
 }
