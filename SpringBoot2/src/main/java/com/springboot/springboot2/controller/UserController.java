@@ -71,6 +71,7 @@ public class UserController {
                     @ApiResponse(responseCode = "500", description = "服务器异常")
             }
     )
+
     public ResponsePojo<Integer> insertUser(
             @Parameter(description = "用户名", example = "张三") @RequestParam String username,
             @Parameter(description = "身份证号", example = "510101200001010001") @RequestParam String idcard,
