@@ -21,6 +21,7 @@ import java.nio.charset.StandardCharsets;
 
 /**
  * 用户控制器
+ * 提供与用户相关的REST API接口，包括用户增删改查、分页查询、欠费名单等功能
  */
 @Tag(name = "业主相关 API")
 @RestController //转换为 JSON
@@ -39,6 +40,9 @@ public class UserController {
 
     /**
      * 生成加密账号
+     * 使用MD5加密算法，结合用户名和时间戳生成唯一账号
+     * @param username 用户名
+     * @return 加密后的账号字符串
      */
     private String generateAccount(String username) {
         return DigestUtils.md5DigestAsHex((username + System.currentTimeMillis()).getBytes(StandardCharsets.UTF_8));
@@ -46,6 +50,8 @@ public class UserController {
 
     /**
      * 默认密码加密
+     * 返回系统默认密码，如果setPassword内部自动加密，这里保留明文即可
+     * @return 默认密码字符串
      */
     private String defaultPassword() {
         return "123456"; // 如果 setPassword 内部自动加密，这里保留明文即可
@@ -82,6 +88,7 @@ public class UserController {
             @Parameter(description = "房间ID", example = "11") @RequestParam Short userRoomId
     ) {
         try {
+            // 创建新用户对象并设置基本信息
             User user = new User();
             user.setUsername(username);
             user.setIdcard(idcard);
@@ -89,13 +96,17 @@ public class UserController {
             user.setAge(age);
             user.setUserType(userType);
             user.setUserRoomId(userRoomId);
+            // 设置用户状态，默认为未激活(3)
             user.setUserStatus(userStatus != null ? userStatus : 3L);
+            // 生成账号和设置默认密码
             user.setAccount(generateAccount(username));
             user.setPassword(defaultPassword());
 
+            // 调用服务层插入用户并返回结果
             int result = userService.insertUser(user);
             return ResponsePojo.success(result, "新增用户成功");
         } catch (Exception e) {
+            // 异常处理并返回错误信息
             return ResponsePojo.error("新增用户失败：" + e.getMessage());
         }
     }
@@ -108,7 +119,9 @@ public class UserController {
     public ResponsePojo<User> queryById(
             @Parameter(description = "用户ID", required = true) @PathVariable("userid") Integer id) {
 
+        // 根据ID查询用户信息
         User user = userService.queryById(id);
+        // 判断查询结果并返回相应响应
         return (user != null)
                 ? ResponsePojo.success(user)
                 : ResponsePojo.fail(null, "该 ID 不存在对应用户");
@@ -124,9 +137,11 @@ public class UserController {
             @Parameter(description = "当前页", example = "1") @RequestParam(defaultValue = "1") Integer current,
             @Parameter(description = "每页行数", example = "10") @RequestParam(defaultValue = "10") Integer size) {
 
+        // 确保页码和每页大小不小于1
         current = Math.max(1, current);
         size = Math.max(1, size);
 
+        // 调用服务层获取分页数据
         PageResult<User> page = userService.pageOfOwner(current, size);
         return ResponsePojo.success(page);
     }
@@ -141,9 +156,11 @@ public class UserController {
             @Parameter(description = "每页行数", example = "10") @RequestParam(defaultValue = "10") Integer size,
             @Parameter(description = "费用类型ID") @RequestParam Integer typeId) {
 
+        // 确保页码和每页大小不小于1
         current = Math.max(1, current);
         size = Math.max(1, size);
 
+        // 调用服务层获取欠费名单分页数据
         PageResult<UnpaidOwner> pageResult = userService.pageOfUnpaidOwnerList(current, size, typeId);
         return ResponsePojo.success(pageResult);
     }
