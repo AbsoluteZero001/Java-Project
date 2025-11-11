@@ -35,6 +35,7 @@ public class FloorServiceImpl implements FloorService {
      * @param size       楼层数量
      * @param builtArea  每层楼房间面积数组
      */
+
     @Override
     public void insertFloors(Floor floor, Map<String, Integer> results, int size, Integer[] builtArea) {
         List<Floor> floorList = new ArrayList<>(size);
