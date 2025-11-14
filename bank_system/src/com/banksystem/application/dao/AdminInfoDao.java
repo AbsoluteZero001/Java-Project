@@ -16,7 +16,7 @@ public class AdminInfoDao {
      *
      * @param adminInfo 包含管理员信息的AdminInfo对象
      */
-    public Long addAdmin(AdminInfo adminInfo) {
+    public static Long addAdmin(AdminInfo adminInfo) {
         Long id = 0L;
         // 获取数据库连接
         Connection conn = Database.getConn();

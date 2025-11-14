@@ -6,15 +6,15 @@ import junit.framework.TestCase;
 public class AdminInfoDaoTest extends TestCase {
 
 //添加管理员测试方法
-//    public void testAddAdmin() {
-//        AdminInfoDao adminInfoDao = new AdminInfoDao();
-//        AdminInfo adminInfo = new AdminInfo();
-//        adminInfo.setPassword("12345678");
-//        adminInfo.setNickname("许三土");
-//        adminInfo.setName("土三许");
-//        adminInfo.setMobile("17740144414");
-//        AdminInfoDao.addAdmin(adminInfo);
-//        }
+public void testAddAdmin() {
+    AdminInfoDao adminInfoDao = new AdminInfoDao();
+    AdminInfo adminInfo = new AdminInfo();
+    adminInfo.setPassword("12345678");
+    adminInfo.setNickname("哈吉米");
+    adminInfo.setName("曼波");
+    adminInfo.setMobile("17777177017");
+    AdminInfoDao.addAdmin(adminInfo);
+}
 
 
 /**
