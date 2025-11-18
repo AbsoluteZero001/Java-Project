@@ -47,5 +47,6 @@ public interface UserService {
     /**
      * 添加pageOfUnpaidOwnerList方法，用于查询未缴费业主列表
      */
-    PageResult<UnpaidOwner> pageOfUnpaidOwnerList(Integer current, Integer size, Integer typeId);
+    PageResult<UnpaidOwner> pageOfUnpaidOwnerList
+    (Integer current, Integer size, Integer typeId);
 }

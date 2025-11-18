@@ -25,22 +25,15 @@ public class AdminInfoDao {
         try {
             // 创建PreparedStatement对象并设置参数
             PreparedStatement ps = conn.prepareStatement(sql);
-            // 设置第一个参数为密码
             ps.setString(1, adminInfo.getPassword());
-            // 设置第二个参数为昵称
             ps.setString(2, adminInfo.getNickname());
-            // 设置第三个参数为姓名
             ps.setString(3, adminInfo.getName());
-            // 设置第四个参数为手机号
             ps.setString(4, adminInfo.getMobile());
-            // 执行更新操作，返回受影响的行数
             int i = ps.executeUpdate();
-            // 如果受影响的行数大于0，表示添加成功
             if (i > 0) {
                 System.out.println("添加成功");
             }
         } catch (SQLException e) {
-            // 捕获SQL异常并转换为运行时异常抛出
             throw new RuntimeException(e);
         }
         return id;
@@ -49,7 +42,8 @@ public class AdminInfoDao {
     // 根据 mobile 查询 AdminInfo
     public static AdminInfo getAdminByMobile(String mobile) {
         Connection conn = Database.getConn();
-        String sql = "SELECT id, password, nickname, name, mobile, state, deleted, create_by, update_by, create_time, update_time FROM admin_info WHERE mobile = ?";
+        String sql = "SELECT id, password, nickname, name, mobile, state, deleted, create_by, update_by," +
+                " create_time, update_time FROM admin_info WHERE mobile = ?";
         try {
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, mobile);

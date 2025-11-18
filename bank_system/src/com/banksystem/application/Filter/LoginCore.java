@@ -21,10 +21,8 @@ public class LoginCore implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-
         // 获取请求方法
         String method = req.getMethod();
         System.out.println("method: " + method);
@@ -34,32 +32,26 @@ public class LoginCore implements Filter {
             filterChain.doFilter(req, resp);
             return;
         }
-
         // 获取请求路径
         String url = req.getRequestURI();
-
         // 登录接口放行
         if ("/login".equals(url)) {
             filterChain.doFilter(req, resp);
             return;
         }
-
         // 从请求头中获取 token
         String token = req.getHeader("token");
-
         // 未携带 token
         if (token == null || token.isEmpty()) {
             ResponseUtil.fail(resp, ErrorCode.NOT_LOGIN);
             return;
         }
-
         // 校验 token 是否存在于管理员或普通用户登录 map 中
         if (Objects.isNull(ConvertUtils.ADMIN_LOGIN_MAP.get(token))
                 && Objects.isNull(ConvertUtils.USER_LOGIN_MAP.get(token))) {
             ResponseUtil.fail(resp, ErrorCode.NOT_LOGIN);
             return;
         }
-
         // 验证通过，放行
         filterChain.doFilter(req, resp);
     }

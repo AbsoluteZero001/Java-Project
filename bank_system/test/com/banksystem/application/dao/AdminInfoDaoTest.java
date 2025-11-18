@@ -28,7 +28,6 @@ public void testAddAdmin() {
         AdminInfo adminByMobile = adminInfoDao.getAdminByMobile("17740144414000");
         // 输出查询到的管理员信息到控制台
         System.out.println(adminByMobile);
-
     }
 
 

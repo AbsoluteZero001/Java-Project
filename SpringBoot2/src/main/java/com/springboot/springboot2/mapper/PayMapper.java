@@ -1,6 +1,7 @@
 package com.springboot.springboot2.mapper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.springboot.springboot2.pojo.Pay;
 import com.springboot.springboot2.pojo.PayInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,5 +24,5 @@ public interface PayMapper {
     );
 
     // 子查询
-    PayInfo queryById(Integer id);
+    Pay queryById(Integer id);
 }
