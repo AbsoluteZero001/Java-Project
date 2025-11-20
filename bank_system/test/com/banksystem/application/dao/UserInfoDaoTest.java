@@ -12,6 +12,7 @@ public class UserInfoDaoTest extends TestCase {
      * 测试添加用户信息的方法
      * 验证UserInfoDao的addOne方法是否能够正确添加用户信息
      */
+
     public void testAdduser() {
         // 创建UserInfoDao实例
         UserInfoDao userInfoDao = new UserInfoDao();
