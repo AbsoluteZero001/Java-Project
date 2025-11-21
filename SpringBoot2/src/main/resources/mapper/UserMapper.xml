@@ -97,63 +97,42 @@
     </update>
 
     <!-- ===================== UnpaidOwner 映射 ===================== -->
-    <resultMap id="UnpaidOwnerMap" type="com.springboot.springboot2.pojo.UnpaidOwner">
-
-        <association property="user"
-                     javaType="com.springboot.springboot2.pojo.User"
-                     resultMap="baseColumns"/>
-
-        <association property="amount"
-                     javaType="com.springboot.springboot2.pojo.Amount"
-                     autoMapping="true">
-            <id column="amount_id" property="amountId"/>
-            <result column="amount_date" property="amountDate"/>
-            <result column="amount" property="amount"/>
-            <result column="amount_type" property="amountType"/>
-            <result column="ispaied" property="isPaid"/>
-            <result column="amount_roomid" property="amountRoomId"/>
-        </association>
-
-        <association property="room"
-                     javaType="com.springboot.springboot2.pojo.Room"
-                     autoMapping="true">
-            <id column="room_id" property="roomId"/>
-            <result column="room_code" property="roomCode"/>
-        </association>
-
+    <resultMap id="unpaidowner" type="com.springboot.springboot2.pojo.UnpaidOwner">
+        <association property="user" resultMap="baseColumns"/>
+        <association property="amount" javaType="com.springboot.springboot2.pojo.Amount" autoMapping="true"/>
+        <association property="room" javaType="com.springboot.springboot2.pojo.Room" autoMapping="true"/>
     </resultMap>
 
     <!-- ===================== 欠费业主列表查询 ===================== -->
     <select id="unpaidOwnerList"
             parameterType="int"
-            resultMap="UnpaidOwnerMap">
+            resultMap="unpaidowner">
 
-        SELECT
-            u.userid,
-            u.username,
-            u.account,
-            u.idcard,
-            u.gender,
-            u.age,
-            u.user_type,
-            u.user_status,
-            u.user_roomid,
+        SELECT u.userid        AS userid,
+               u.username      AS username,
+               u.account       AS account,
+               u.idcard        AS idcard,
+               u.gender        AS gender,
+               u.age           AS age,
+               u.user_type     AS user_type,
+               u.user_status   AS user_status,
+               u.user_roomid   AS user_roomid,
 
-            a.amount_id,
-            a.amount_date,
-            a.amount,
-            a.amount_type,
-            a.ispaied,
-            a.amount_roomid,
+               a.amount_id     AS amountId,
+               a.amount_date   AS amountDate,
+               a.amount        AS amount,
+               a.amount_type   AS amountType,
+               a.is_paid       AS isPaid,
+               a.amount_roomid AS amountRoomId,
 
-            r.room_id,
-            r.room_code
+               r.room_id       AS roomId,
+               r.room_code     AS roomCode
 
         FROM amount a
                  LEFT JOIN room r ON a.amount_roomid = r.room_id
                  LEFT JOIN user u ON r.room_id = u.user_roomid
 
-        WHERE a.ispaied = 2
+        WHERE a.is_paid = 2
           AND a.amount_type = #{typeId}
 
         ORDER BY a.amount_date ASC, u.username ASC
