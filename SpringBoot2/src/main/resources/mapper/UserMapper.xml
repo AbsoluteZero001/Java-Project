@@ -18,10 +18,12 @@
         <result column="user_roomid" property="userRoomId" javaType="java.lang.Short"/>
     </resultMap>
 
-    <!-- 业主与房间关联 -->
+    <!-- ===================== 业主与房间关联 ===================== -->
     <resultMap id="ownRoom" type="com.springboot.springboot2.pojo.User" extends="baseColumns">
-        <collection property="rooms" ofType="com.springboot.springboot2.pojo.Room"
-                    column="user_roomid" select="com.springboot.springboot2.mapper.RoomMapper.roomById"/>
+        <collection property="rooms"
+                    ofType="com.springboot.springboot2.pojo.Room"
+                    column="user_roomid"
+                    select="com.springboot.springboot2.mapper.RoomMapper.roomById"/>
     </resultMap>
 
     <!-- ===================== 新增用户 ===================== -->
@@ -96,23 +98,36 @@
 
     <!-- ===================== UnpaidOwner 映射 ===================== -->
     <resultMap id="UnpaidOwnerMap" type="com.springboot.springboot2.pojo.UnpaidOwner">
-        <association property="user" javaType="com.springboot.springboot2.pojo.User" resultMap="baseColumns"/>
-        <association property="amount" javaType="com.springboot.springboot2.pojo.Amount">
-            <id column="amount_id" property="amountId" javaType="java.lang.Integer"/>
-            <result column="amount_date" property="amountDate" javaType="java.util.Date"/>
-            <result column="amount" property="amount" javaType="java.math.BigDecimal"/>
-            <result column="amount_type" property="amountType" javaType="java.lang.Integer"/>
-            <result column="ispaied" property="isPaid" javaType="java.lang.Integer"/>
-            <result column="amount_roomid" property="amountRoomId" javaType="java.lang.Integer"/>
+
+        <association property="user"
+                     javaType="com.springboot.springboot2.pojo.User"
+                     resultMap="baseColumns"/>
+
+        <association property="amount"
+                     javaType="com.springboot.springboot2.pojo.Amount"
+                     autoMapping="true">
+            <id column="amount_id" property="amountId"/>
+            <result column="amount_date" property="amountDate"/>
+            <result column="amount" property="amount"/>
+            <result column="amount_type" property="amountType"/>
+            <result column="ispaied" property="isPaid"/>
+            <result column="amount_roomid" property="amountRoomId"/>
         </association>
-        <association property="room" javaType="com.springboot.springboot2.pojo.Room">
-            <id column="room_id" property="roomId" javaType="java.lang.Integer"/>
-            <result column="room_code" property="roomCode" javaType="java.lang.String"/>
+
+        <association property="room"
+                     javaType="com.springboot.springboot2.pojo.Room"
+                     autoMapping="true">
+            <id column="room_id" property="roomId"/>
+            <result column="room_code" property="roomCode"/>
         </association>
+
     </resultMap>
 
     <!-- ===================== 欠费业主列表查询 ===================== -->
-    <select id="unpaidOwnerList" parameterType="int" resultMap="UnpaidOwnerMap">
+    <select id="unpaidOwnerList"
+            parameterType="int"
+            resultMap="UnpaidOwnerMap">
+
         SELECT
             u.userid,
             u.username,
@@ -133,11 +148,14 @@
 
             r.room_id,
             r.room_code
+
         FROM amount a
                  LEFT JOIN room r ON a.amount_roomid = r.room_id
                  LEFT JOIN user u ON r.room_id = u.user_roomid
+
         WHERE a.ispaied = 2
           AND a.amount_type = #{typeId}
+
         ORDER BY a.amount_date ASC, u.username ASC
     </select>
 

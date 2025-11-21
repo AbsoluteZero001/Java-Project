@@ -72,4 +72,5 @@ public class UserServiceImpl implements UserService {
        Page<UnpaidOwner> page = userMapper.unpaidOwnerList(typeId);
        return PageResult.restPage(page);
     }
+
 }

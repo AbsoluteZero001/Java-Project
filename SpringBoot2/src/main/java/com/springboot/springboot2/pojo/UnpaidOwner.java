@@ -12,5 +12,4 @@ public class UnpaidOwner {
     private Amount amount;
     @Schema(description = "欠费房间信息")
     private Room room;
-
 }
