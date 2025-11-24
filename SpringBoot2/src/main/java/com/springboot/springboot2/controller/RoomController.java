@@ -47,6 +47,7 @@ public class RoomController {
                     "floorNumber: 房间所属楼层数, required false,<br/>" +
                     "buildingNumber: 房间所属建筑号, required false}"
     )
+
     public ResponsePojo<PageResult<Room>> pageOfRooms(
             @RequestBody Map<String, String> params) {
 
