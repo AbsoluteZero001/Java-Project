@@ -65,6 +65,7 @@ public class BuildingController {
             summary = "查询楼栋分页信息",
             description = "分页返回楼栋列表信息"
     )
+
     public ResponsePojo<PageResult<com.springboot.springboot2.pojo.Building>> pageOfBuilding(
             @Parameter(description = "当前页数", example = "1")
             @RequestParam(defaultValue = "1") Integer current,
