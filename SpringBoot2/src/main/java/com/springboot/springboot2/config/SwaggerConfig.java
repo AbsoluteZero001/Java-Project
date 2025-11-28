@@ -19,6 +19,6 @@ public class SwaggerConfig {
                         .contact(new Contact()
                                 .name("成都工业职业技术学院Hacker")
                                 .url("http://localhost:8081/")
-                                .email("TANGJINJIE2006@outlook.com")));
+                                .email("absolutezero.cold200@simplelogin.com")));
     }
 }
