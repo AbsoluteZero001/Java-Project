@@ -16,9 +16,8 @@ public class SwaggerConfig {
                         .description("进行房屋租售的在线平台") // 描述
                         .version("1.0")                  // 版本
                         .contact(new Contact()
-                                .name("成都工业职业技术学院唐进杰")
+                                .name("成都工业职业技术学院EnderMan")
                                 .url("http://localhost:8082/")
                                 .email("TANGJINJIE2006@outlook.com")));
     }
-
 }
