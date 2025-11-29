@@ -18,8 +18,8 @@ public class SwaggerConfig {
                         .description("进行基础资料的管理") // 描述
                         .version("1.0")                  // 版本
                         .contact(new Contact()
-                                .name("成都工业职业技术学院唐进杰")
+                                .name("成都工业职业技术学院")
                                 .url("http://localhost:8080/")
-                                .email("TANGJINJIE2006@outlook.com")));
+                                .email("absolutezero.cold200@simplelogin.com")));
     }
 }

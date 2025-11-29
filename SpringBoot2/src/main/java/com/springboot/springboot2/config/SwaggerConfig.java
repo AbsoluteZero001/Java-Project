@@ -17,7 +17,7 @@ public class SwaggerConfig {
                         .description("进行物业管理") // 描述
                         .version("1.0")                  // 版本
                         .contact(new Contact()
-                                .name("成都工业职业技术学院Hacker")
+                                .name("成都工业职业技术学院")
                                 .url("http://localhost:8081/")
                                 .email("absolutezero.cold200@simplelogin.com")));
     }

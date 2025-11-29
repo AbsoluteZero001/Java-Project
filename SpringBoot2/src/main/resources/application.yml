@@ -1,14 +1,17 @@
 # Spring配置
 spring:
+  # 配置文件位置
+  config:
+    import: optional:application-private.yml
   # 数据源配置
   datasource:
     # MySQL数据库连接URL，指定了数据库为rpsm，使用Unicode编码，UTF-8字符集，UTC时区
     url: jdbc:mysql://localhost:3306/rpsm?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
     # 数据库用户名
-    username: root
+    username: ${DB_USERNAME}
     # 数据库密码
-    password: 123456
-
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 # MyBatis配置
 mybatis:
   # Mapper XML文件的位置，位于classpath下的mapper目录
