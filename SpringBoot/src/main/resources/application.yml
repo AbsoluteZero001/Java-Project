@@ -1,9 +1,12 @@
 spring:
+  config:
+    # 导入私有配置文件，使用optional标记表示可选，即使文件不存在也不会报错
+    import: optional:application-private.yml
   datasource:
-    url: jdbc:mysql://localhost:3306/rpsm?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC
-    username: root
-    password: 123456
-
+    url: jdbc:mysql://localhost:3306/rpsm?useUnicode=true&characterEncoding=utf8&serverTimezone=UTC  # 数据库连接URL
+    username: ${DB_USERNAME}  # 数据库用户名，从环境变量中获取
+    password: ${DB_PASSWORD}  # 数据库密码，从环境变量中获取
+    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL驱动类名
 mybatis:
   # 指定 mapper.xml 的位置
   mapper-locations: classpath:mapper/*.xml
@@ -12,23 +15,23 @@ mybatis:
   type-aliases-package: com.springboot.springboot.pojo
 
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true  # 开启驼峰映射
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # MyBatis日志实现类
+    map-underscore-to-camel-case: true  # 开启驼峰映射，将数据库下划线命名映射为Java驼峰命名
 
-# PageHelper 分页插件
+# PageHelper 分页插件配置
 pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
+  helper-dialect: mysql  # 指定数据库方言为MySQL
+  reasonable: true  # 启用合理化，如果页码<=0查询第一页，如果页码>总页数查询最后一页
+  support-methods-arguments: true  # 支持通过Mapper接口参数传递分页参数
+  params: count=countSql  # 设置count参数，countSql表示使用SQL查询count
 
 # application.yml 配置上传图片的路径
 avatar:
-  upload-path: D:/springboot_upload/img/
+  upload-path: D:/springboot_upload/img/  # 头像图片上传的本地存储路径
 
 # Swagger UI 配置
 springdoc:
   swagger-ui:
     tagsSorter: alpha                # 接口标签按字母排序
     operationsSorter: alpha          # 接口方法按字母排序
-    defaultModelsExpandDepth: -1     # 隐藏自动展开的模型，去掉多余空白输入框
+    defaultModelsExpandDepth: -1     # 隐藏自动展开的模型，去掉多余空白输入框，使界面更简洁
